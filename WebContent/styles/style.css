@@ -1,0 +1,615 @@
+
+    
+.editBox input{
+	margin-left: 20px;
+    margin-top: -18px;
+}
+.welcome{
+	height: 190px;
+    font-size: 22px;
+    color: #2e3436;
+}
+.footer{
+    font-size: 12px;
+    color: #2e3436;
+    
+}
+.typesetting{
+	padding-left: 30px;
+	background-color: #676262;
+	float:right;
+}
+.normalcursor {
+    cursor: auto !important;
+}
+
+.popover-content {
+    padding: 3px 5px 0px 5px !important;
+}
+
+.btn-save {
+	padding: 4px 4px !important;
+    font-size: 14px !important; 
+    color: #fff !important;
+    background-color: #7D89B7 !important;
+    border-color: #7D89B7 !important;
+}
+.btn-success {
+    color: #fff;
+    background-color: #7D89B7 !important;
+    border-color: #7D89B7 !important; 
+}
+.btn-success:hover {
+    color: #fff;
+    background-color: #505875 !important;
+    border-color: #2F3446 !important;
+}
+
+.angular-ui-tree-placeholder-warning {
+    background: #FFF0F0 !important;
+    border: 2px dashed #A02713 !important;
+}
+
+/**Module table*/
+.moduleTable td:last-child {
+  min-width: 90px;
+}
+
+
+/** Editable table
+------------------------- */
+
+.editable-table > tbody > tr > td {
+  padding: 4px
+}
+.editable-text {
+  padding-left: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: inline-block;
+}
+.editable-table tbody > tr > td > .controls {
+  //width: 100%
+}
+.editable-input {
+  padding-left: 3px;
+}
+.editable-input.input-sm {
+  height: 30px;
+  font-size: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/** Tabs*/
+md-tab-content {
+  overflow: auto;
+}
+
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+  min-height: !important 500px;
+}
+
+.tabsdemoDynamicTabs md-content {
+  background-color: transparent !important; }
+  .tabsdemoDynamicTabs md-content md-tabs {
+    border: 1px solid #e1e1e1; }
+    .tabsdemoDynamicTabs md-content md-tabs md-tab-content {
+      background: #f6f6f6; }
+    .tabsdemoDynamicTabs md-content md-tabs md-tabs-wrapper {
+      background: white; }
+  .tabsdemoDynamicTabs md-content h1:first-child {
+    margin-top: 0; }
+.tabsdemoDynamicTabs md-input-container {
+  padding-bottom: 0; }
+.tabsdemoDynamicTabs .remove-tab {
+  margin-bottom: 40px; }
+.tabsdemoDynamicTabs .demo-tab > div > div {
+  padding: 25px;
+  box-sizing: border-box; }
+.tabsdemoDynamicTabs .edit-form input {
+  width: 100%; }
+.tabsdemoDynamicTabs md-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+.tabsdemoDynamicTabs md-tab[disabled] {
+  opacity: 0.5; }
+.tabsdemoDynamicTabs label {
+  text-align: left; }
+.tabsdemoDynamicTabs .long > input {
+  width: 264px; }
+.tabsdemoDynamicTabs .md-button.add-tab {
+  transform: translateY(5px); }
+  
+  
+
+label, input, button, select, textarea {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+
+  
+  .border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.dialogdemoBasicUsage #popupContainer {
+  position: relative;
+}
+.dialogdemoBasicUsage .footer {
+  width: 100%;
+  text-align: center;
+  margin-left: 20px;
+}
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+  font-size: 0.8em;
+  margin-top: 50px;
+}
+
+
+.selected{
+    border: 0;
+    background: #7c9eb2;
+}
+
+
+/** Rules Dialog */
+/* * Hide from both screenreaders and browsers: h5bp.com/u */
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+/* * Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/* * Extends the .visuallyhidden class to allow the element to be focusable * when navigated to via the keyboard: h5bp.com/p */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto;
+} /* * Hide visually and from screenreaders, but maintain layout */
+
+.invisible {
+	visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.clearfix:after {
+	clear: both;
+}
+.noflick {
+	perspective: 1000;
+	backface-visibility: hidden;
+	transform: translate3d(0,0,0);
+}
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+* {
+	box-sizing: border-box;
+}
+html,
+button,
+input,
+select,
+textarea {
+	color: #000000;
+}
+
+body {
+	font-size: 1em;
+	line-height: 1;
+	background-color: rgba(255,255,255,1);
+	background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(235,235,235,1) 47%, rgba(222,222,222,1) 100%);
+}
+
+::selection {
+	background: #B3D4FC;
+	text-shadow: none;
+}
+a:focus {
+	outline: none;
+}
+::-webkit-input-placeholder {
+	color: rgba(0,0,0,.7);
+}
+
+:placeholder {
+	/* Firefox 18- */
+	color: rgba(0,0,0,.7);
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+#board {
+	padding: 100px 30px 30px;
+	margin-top: 40px;
+	overflow-y: visible;
+	@extend .noflick;
+}
+.note {
+	float: left;
+	display: block;
+	position: absolute;
+	top:0px;
+	left:530px;
+	padding: 0 0 0 0;
+	width: 190px;
+	min-height: 130px;
+	margin: 0 30px 30px 0;
+	background: #4478a0;
+	box-shadow: 0px 0px 8px rgba(68, 140, 160, 0.5);
+	font-size:11px;
+	z-index: 1050;
+	@extend .noflick;
+
+	&:hover {
+		cursor: move;
+	}
+	&.ui-draggable-dragging:nth-child(n) {
+		box-shadow: 5px 5px 15px 0 rgba(0,0,0,.3);
+		transform: scale(1.125) !important;
+		z-index: 1050;
+		cursor: move;
+		transition: transform .150s;
+	}
+
+	textarea {
+		background-color: transparent;
+		border: none;
+		resize: vertical;
+		font-family: "Gloria Hallelujah", cursive;
+		width: 100%;
+		padding: 5px;
+		&:focus {
+			outline: none;
+			border: none;
+			box-shadow: 0 0 5px 1px rgba(0,0,0,.2) inset;
+		}
+		&.title {
+			font-size: 24px;
+			line-height: 1.2;
+			color: #000000;
+			height: 64px;
+			margin-top: 20px;
+		}
+		&.cnt {
+			min-height: 200px;
+		}
+	}
+	&:nth-child(2n) {
+		background: #FAAACA;
+	}
+	&:nth-child(3n) {
+		background: #69F098;
+	}
+}
+
+.note .panel-body{
+	padding: 0 0 0 0;
+}
+
+.note .title {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #5189B5;
+  border-width: 0px 0px 1px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding: 0px 16px;
+  background: #5C9CCE;
+  box-shadow: 0px 1px 4px rgba(68, 120, 160, 0.1);
+  font-size: 12px;
+  line-height:2em;
+  border-radius: 10px;
+}
+
+.note input[type=text]{
+  color: #fff;
+  border: 0;
+  outline: 0;
+  resize: none;
+  width:50px;
+  margin-top: -27px;
+  border-bottom: 1px dotted rgba(250, 250, 250, 0.4);
+  background:#5d92ba;
+}
+
+.note .nodeNumber:hover {
+	background-color: #e2e2e2;
+}
+
+.int-note {
+	float: left;
+	display: block;
+	position: absolute;
+	top:0px;
+	left:530px;
+	padding: 0 0 0 0;
+	width: 190px;
+	min-height: 130px;
+	margin: 0 30px 30px 0;
+	background: #03a4e0;
+	box-shadow: 0px 0px 8px rgba(68, 140, 160, 0.5);
+	font-size:11px;
+	z-index: 1050;
+	@extend .noflick;
+
+	&:hover {
+		cursor: move;
+	}
+	&.ui-draggable-dragging:nth-child(n) {
+		box-shadow: 5px 5px 15px 0 rgba(0,0,0,.3);
+		transform: scale(1.125) !important;
+		z-index: 1050;
+		cursor: move;
+		transition: transform .150s;
+	}
+
+	textarea {
+		background-color: transparent;
+		border: none;
+		resize: vertical;
+		font-family: "Gloria Hallelujah", cursive;
+		width: 100%;
+		padding: 5px;
+		&:focus {
+			outline: none;
+			border: none;
+			box-shadow: 0 0 5px 1px rgba(0,0,0,.2) inset;
+		}
+		&.title {
+			font-size: 24px;
+			line-height: 1.2;
+			color: #000000;
+			height: 64px;
+			margin-top: 20px;
+		}
+		&.cnt {
+			min-height: 200px;
+		}
+	}
+	&:nth-child(2n) {
+		background: #FAAACA;
+	}
+	&:nth-child(3n) {
+		background: #69F098;
+	}
+}
+
+.int-note .title {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #5189B5;
+  border-width: 0px 0px 1px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding: 0px 16px;
+  background: #41e0e9;
+  box-shadow: 0px 1px 4px rgba(68, 120, 160, 0.1);
+  font-size: 12px;
+  line-height:2em;
+  border-radius: 10px;
+}
+
+.int-note .table{
+	background: #9ee2ad;
+}
+
+
+
+.highlight{
+	-webkit-animation-name: blink; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: blink;
+    animation-duration: 5s;
+}
+
+@-webkit-keyframes blink {
+    from {background-color: #FDFBF5;}
+    to {background-color: #e7ce83;}
+}
+
+@keyframes blink {
+    from {background-color: #FDFBF5;}
+    to {background-color: #e7ce83;}
+}
+
+/** UI Tree*/
+.angular-ui-tree .btn {
+    margin-right: 8px;
+}
+
+.angular-ui-tree-handle {
+    background: #f8faff;
+    border: 1px solid #dae2ea;
+    color: #7c9eb2;
+    min-height: 38px !important;
+    padding-top: 8px;
+}
+.angular-ui-tree-nodes {
+    padding-left: 0px; 
+}
+.angular-ui-tree-handle:hover {
+    color: #438eb9;
+    background: #f4f6f7;
+    border-color: #dce2e8;
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+tr.angular-ui-tree-empty {
+    height:500px
+}
+
+
+.tree-node {
+    border: 1px solid #dae2ea;
+    background: #f8faff;
+    color: #7c9eb2;
+}
+.tree-spacer-div{
+	padding: 0px 10px 10px 10px;
+}
+/* --- End Tree --- */
+.angular-ui-tree .group-title {
+    background-color: #687074 !important;
+    color: #FFF !important;
+}
+
+.angular-ui-tree .warning {
+    border: 2px solid #C53E3E !important;
+}
+
+.angular-ui-tree .nodrop {
+    background-color: #f2dede;
+}
+
+.angular-ui-tree .tree-node-content {
+    /* margin: 10px; */
+    
+}
+.angular-ui-tree .tree-handle {
+
+    background: #E3F0F6;
+    color: #7D89B7;
+
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0.0; }
+}
+
+.popoverTitle {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #5189B5;
+  border-width: 0px 0px 1px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  background: #5C9CCE;
+  box-shadow: 0px 1px 4px rgba(68, 120, 160, 0.1);
+  font-size: 12px;
+  line-height:2em;
+}
+.interview-radio-button {
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+	
+}
+md-checkbox {
+  margin: 8px;
+  cursor: pointer;
+  padding-left: 18px;
+  padding-right: 0;
+  line-height: 26px;
+  min-width: 18px;
+  min-height: 18px;
+}
+md-checkbox.md-checked.green .md-icon {
+ background-color: rgba(199, 155, 28, 0.81);
+}
+.interview-radio-button:not([disabled]).md-primary .md-on {
+    background-color: rgba(199, 155, 28, 0.81) !important;
+}
+
+.activeRule{
+	border: 2px solid rgb(9, 16, 72);
+	border-radius: 10px;  
+	background-color: rgb(19, 59, 90) !important;	
+}
+
+.activeCell{
+	border-color:rgb(19, 59, 90);
+}
+
+.activeRule .title{
+	background-color:rgb(19, 59, 90) !important;
+}
+
+.activeRule input[type=text]{
+  background:rgb(19, 59, 90) !important;
+}
+md-toolbar.interviewAnswers{
+   background-color: rgb(30, 42, 109) !important;	
+   border: 1px solid #5189B5;
+   border-radius: 10px;  
+   font-size: 12px !important;	
+}
+md-list-item.interviewAnswers{
+	min-height: 12px !important;	
+}
+.treeNodeText{
+	display: inline-block;
+    max-width: 700px;
+    
+}
+.btn {  
+    vertical-align: top !important;	
+}
+
+ .form-control {
+	width:50% !important;	
+}
+
+.md-dialog-container{
+	z-index: 80 !important;
+}
+
+li.borderless { 
+	border-left: 0 none !important;
+	border-right: 0 none !important;
+	border-bottom: 0 none !important;
+ }
+ 
