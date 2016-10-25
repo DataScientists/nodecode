@@ -1,5 +1,5 @@
 (function() {
-	angular.module("famersBlockchainApp.Tabs", [ 'ui.router', 'ct.ui.router.extras.core',
+	angular.module("nodeCodeApp.Tabs", [ 'ui.router', 'ct.ui.router.extras.core',
 	                                     'ct.ui.router.extras.dsr',
 	                                     'ct.ui.router.extras.sticky' ])
 	.config(Config)

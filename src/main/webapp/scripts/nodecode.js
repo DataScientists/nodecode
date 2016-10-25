@@ -2,9 +2,8 @@
 (function(){
 
 angular
-  .module("famersBlockchainApp", [
+  .module("nodeCodeApp", [
     "ui.router",
-    "toaster",
     "ngMaterial",
     "ngStorage",
     "ui.tree",
@@ -13,15 +12,14 @@ angular
     "ngCsv",
     "angular-confirm",
     "sticky",
+    "ngToast",
     "fsm",
     "angular.filter",
+    "ngFileUpload",
     "ui.bootstrap.contextMenu",
     "ui.bootstrap",
-    "famersBlockchainApp.Tabs",   
-    "famersBlockchainApp.DisplayError",    
-    "famersBlockchainApp.Login",
-    "famersBlockchainApp.Logout",
-    "famersBlockchainApp.Admin"
+    "nodeCodeApp.Login",
+    "nodeCodeApp.Logout"
   ], function($rootScopeProvider){
 	  $rootScopeProvider.digestTtl(100);
   })
@@ -48,6 +46,17 @@ angular
   }])
   .run(configureDefaults)
   .provider({
+//	  $exceptionHandler: function(){
+//		   var $log =  angular.injector(['ng']).get('$log');
+//	        var handler = function(exception, cause) {
+//	            alert("Exception:"+exception+":Cause:"+cause);
+//	            $log.error("Exception:"+exception+":Cause:"+cause);
+//	        };
+//
+//	        this.$get = function() {
+//	            return handler;
+//	        };
+//	    }
   })
   .service(service)
   .factory('TokenRefreshInterceptor',TokenRefreshInterceptor)
@@ -59,8 +68,8 @@ angular
     return $delegate;
   });	
 
-   configureDefaults.$inject = ['ngTableDefaults','$state', '$rootScope','AuthenticationService', 'dataBeanService','$window','$sessionStorage'];
-   function configureDefaults(ngTableDefaults,$state,$rootScope,AuthenticationService, dataBeanService,$window,$sessionStorage) {
+   configureDefaults.$inject = ['ngTableDefaults','$state', '$rootScope','AuthenticationService','dataBeanService','$window','$sessionStorage'];
+   function configureDefaults(ngTableDefaults,$state,$rootScope,AuthenticationService,dataBeanService,$window,$sessionStorage) {
 	   	$rootScope._ = window._; 
 	   	ngTableDefaults.params.count = 5;
         ngTableDefaults.settings.counts = [];
@@ -139,13 +148,65 @@ angular
             },
            'responseError': function(response) {
         	   var $sessionStorage = $injector.get('$sessionStorage');
+        	   var dataBeanService = $injector.get('dataBeanService');
+        	   var $ngToast = $injector.get('ngToast');
         	   var state = $injector.get('$state');
         	   var http = $injector.get('$http');
-               if (response.status === 401) {
-            	   delete $sessionStorage.token;
+               if (response.status === 408) {
+            	   if($sessionStorage.token){
                    http.defaults.headers.common['X-Auth-Token'] = "";
-                   state.go('login', {}, {reload: true});
-               } else {
+                   	delete $sessionStorage.userId;
+               		delete $sessionStorage.token;
+               		delete $sessionStorage.roles;
+               		$sessionStorage.isAuthenticated = false;
+               		dataBeanService.setStatetransitionHasErr('0');
+               		state.go('loginHome', {reload: true});
+              		$window.location.href = 'index.html';
+                   $ngToast.create({
+     	    		  className: 'danger',
+     	    		  content: response.headers().errormsg,
+           	    	  animation:'slide'
+                   });
+            	   }
+               }else if(response.status === 401){
+            	   if($sessionStorage.token){
+            		   http.defaults.headers.common['X-Auth-Token'] = "";
+                      	delete $sessionStorage.userId;
+                  		delete $sessionStorage.token;
+                  		delete $sessionStorage.roles;
+                  		$sessionStorage.isAuthenticated = false;
+                  		dataBeanService.setStatetransitionHasErr('0');
+                  		 state.go('loginHome', {reload: true});
+                   		$window.location.href = 'index.html';
+                      $ngToast.create({
+        	    		  className: 'danger',
+        	    		  content: response.headers().errormsg,
+              	    	  animation:'slide'
+                      });
+            	   }
+               }
+               else if(response.status == 403){
+      	        	var state = $injector.get('$state');       
+      	          	alert("Occideas is in READ-ONLY mode, update/delete action is not premitted.");
+      	       }else if(response.status == '417'){
+      	    	 var errorMessages = [];
+          	   if(response.data){
+          		   errorMessages.push(response.data);
+          	   }
+      	    	 $ngToast.create({
+      	    		  className: 'danger',
+      	    		  content: errorMessages,
+      	    		  dismissButton: true,
+      	    		  dismissOnClick:false,
+      	    		  animation:'slide'
+      	    	 });
+      	       }
+               else{
+            	    /*state.go('error',{
+       	            	error:"Response Status returned:"
+       	            		+response.status+" "
+       	            		+response.statusText+" "
+       	            		+response.data});*/
             	   var errorMessages = [];
             	   if(response.message){
             		   errorMessages.push(response.message);
@@ -173,14 +234,17 @@ angular
        }
    }
    
-   service.$inject = ['$state', '$rootScope', 'AuthenticationService', 'dataBeanService', 'toaster','$window','$sessionStorage'];
-   function service ($state, $rootScope, AuthenticationService, dataBeanService, toaster,$window,$sessionStorage){
+   service.$inject = ['$state', '$rootScope', 'AuthenticationService', 'dataBeanService', 'ngToast','$window','$sessionStorage'];
+   function service ($state, $rootScope, AuthenticationService, dataBeanService, ngToast,$window,$sessionStorage){
        var app = this;
        app.logout = function() {
-           toaster.pop('success', "Logout Successfull", "Goodbye");
+    	   ngToast.create({
+	    		  className: 'success',
+	    		  content: 'Logout Successfull", "Goodbye'
+	    	 });
            $sessionStorage.userId = null;
            $sessionStorage.token = null;
-           $state.go('login', {}, {reload: true});
+           $state.go('loginHome', {}, {reload: true});
        };
    }
    

@@ -1,6 +1,6 @@
 (function(){
 	
-angular.module('famersBlockchainApp')   
+angular.module('nodeCodeApp')   
 .directive('permission', ['AuthenticationService', function(Auth) {
    return {
        restrict: 'A',

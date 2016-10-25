@@ -2,7 +2,7 @@
 <html >
 <head>
 	<meta charset="UTF-8"/>
-	<title>NodeCode</title>
+	<title>Node Code1</title>
 	<!-- Development Start -->
 	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script> -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.1/lodash.min.js"></script>
@@ -30,7 +30,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.7/angular-sanitize.js"></script>
 	<script src="scripts/angular/dialog.js"></script>
-	<script src="scripts/angular/toaster.js"></script>
+	<script src="scripts/angular/ngToast.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.8/angular-sanitize.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
 	  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
@@ -58,6 +58,8 @@
     <!--For export PDF-->
     <script src="scripts/angular/html2canvas.min.js"></script>
     <script src="scripts/angular/jspdf.min.js"></script>
+    <script src="scripts/angular/ng-file-upload.min.js"></script>
+    <script src="scripts/angular/ng-file-upload-shim.min.js"></script>
 
 	<!-- Production End -->
 	
@@ -69,15 +71,17 @@
 	<link rel="stylesheet" href="styles/angular-material.css"/>
 	<link rel="stylesheet" href="styles/loading-bar.css"/>
 	<!-- Login requirements -->
-	<link rel="stylesheet" href="styles/toaster.css">
+	<link rel="stylesheet" href="styles/ngToast.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<link rel="stylesheet" href="styles/loginstyle.css" />
+	
+	
 		
 </head>
-<body ng-app="famersBlockchainApp">
+<body ng-app="nodeCodeApp">
     <div class="container">
       <header ng-include="'nav.html'" ng-cloak></header>
       <div ui-view>      
@@ -85,7 +89,16 @@
       <footer ng-include="'footer.html'"></footer>
     </div>  
 </body>
-    <script src="scripts/farmerblockchain.js"></script>
+	<script src="scripts/nodecode.js"></script>
+	<script src="scripts/login/login.js"></script>
+	<script src="scripts/login/controller/loginCtrl.js"></script>
+	<script src="scripts/login/service/dataBeanService.js"></script>
+	<script src="scripts/login/service/loginService.js"></script>
+	<script src="scripts/authenticationService.js"></script>
+    <script src="scripts/permissionDirective.js"></script>
+    <script src="scripts/logout/logout.js"></script>
+	<script src="scripts/logout/controller/logoutCtrl.js"></script>
+   <!--  <script src="scripts/farmerblockchain.js"></script>
     <script src="scripts/error/displayError.js"></script>   
 	<script src="scripts/error/controller/displayErrorCtrl.js"></script>
 	<script src="scripts/error/controller/errorCtrl.js"></script>	
@@ -101,5 +114,5 @@
 	<script src="scripts/logout/controller/logoutCtrl.js"></script>
 	<script src="scripts/admin/admin.js"></script>
 	<script src="scripts/admin/controller/adminCtrl.js"></script>
-	<script src="scripts/admin/service/adminService.js"></script>
+	<script src="scripts/admin/service/adminService.js"></script> -->
 </html>

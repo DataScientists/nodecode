@@ -1,5 +1,5 @@
 (function(){
-	angular.module('famersBlockchainApp.DisplayError')
+	angular.module('nodeCodeApp.DisplayError')
 	.filter("htmlToPlaintext", function() {
         return function(input) {
             return input.replace(/<[^>]+>/gm, '');

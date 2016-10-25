@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('famersBlockchainApp.Login')
+    angular.module('nodeCodeApp.Login')
         .service('AuthenticationService',AuthenticationService);
 
     AuthenticationService.$inject = [ '$http', '$q', '$rootScope','$window','$sessionStorage'];

@@ -1,5 +1,5 @@
 (function() {
-    angular.module("famersBlockchainApp.Tabs").controller("TabsCtrl", TabsCtrl);
+    angular.module("nodeCodeApp.Tabs").controller("TabsCtrl", TabsCtrl);
 
     TabsCtrl.$inject = ['$scope', '$state', '$rootScope', '$log', '$stickyState', 'AuthenticationService'];
 

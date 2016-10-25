@@ -1,5 +1,5 @@
 (function() {
-    angular.module('famersBlockchainApp.Logout',['ui.router','ngStorage']).config(Config);
+    angular.module('nodeCodeApp.Logout',['ui.router','ngStorage']).config(Config);
 
     Config.$inject = ['$stateProvider'];
 

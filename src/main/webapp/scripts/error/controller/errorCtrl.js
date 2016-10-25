@@ -1,6 +1,6 @@
 (function(){
 	angular
-	  .module("famersBlockchainApp")
+	  .module("nodeCodeApp")
 	  .controller("ErrorCtrl",ErrorCtrl);
 	
 	ErrorCtrl.$inject = ['$scope','error'];

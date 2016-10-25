@@ -1,6 +1,6 @@
 (function(){
 	angular
-	  .module('famersBlockchainApp.Admin',['ui.router'])
+	  .module('nodeCodeApp.Admin',['ui.router'])
 	  .config(Config);
 	
 	Config.$inject = ['$stateProvider'];

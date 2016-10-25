@@ -1,6 +1,6 @@
 (function(){
 
-    angular.module('famersBlockchainApp.Login').service('dataBeanService',dataBeanService);
+    angular.module('nodeCodeApp.Login').service('dataBeanService',dataBeanService);
     dataBeanService.$inject = [ '$q', '$filter', '$timeout','$http', '$window'];
 
     function dataBeanService($q, $filter, $timeout,$http, $window){

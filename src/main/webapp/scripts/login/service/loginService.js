@@ -1,6 +1,6 @@
 (function(){
 
-    angular.module('famersBlockchainApp.Login').service('loginService',loginService);
+    angular.module('nodeCodeApp.Login').service('loginService',loginService);
     loginService.$inject = [ '$q', '$filter', '$timeout','$http'];
 
     function loginService($q, $filter, $timeout,$http){

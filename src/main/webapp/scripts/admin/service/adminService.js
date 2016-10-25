@@ -1,5 +1,5 @@
 (function() {
-	angular.module('famersBlockchainApp.Admin')
+	angular.module('nodeCodeApp.Admin')
 			.service('AdminService', AdminService);
 
 	AdminService.$inject = [ '$http', '$q' ];

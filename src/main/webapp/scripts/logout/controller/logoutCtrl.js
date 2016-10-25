@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('famersBlockchainApp.Logout').controller('LogoutCtrl',
+    angular.module('nodeCodeApp.Logout').controller('LogoutCtrl',
             LogoutCtrl);
 
     LogoutCtrl.$inject = ['$state', '$rootScope', 'dataBeanService','$window','$sessionStorage'];

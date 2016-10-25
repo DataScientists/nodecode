@@ -1,6 +1,6 @@
 (function(){
 	angular
-	  .module('famersBlockchainApp.Admin')
+	  .module('nodeCodeApp.Admin')
 	  .controller('AdminCtrl',AdminCtrl);
 	
 	AdminCtrl.$inject = ['$log','ngTableParams','$scope','$filter','AdminService'];
