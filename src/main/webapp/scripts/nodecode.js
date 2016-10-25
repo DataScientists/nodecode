@@ -18,6 +18,9 @@ angular
     "ngFileUpload",
     "ui.bootstrap.contextMenu",
     "ui.bootstrap",
+    "nodeCodeApp.Tabs",
+    "nodeCodeApp.DisplayError",
+    "nodeCodeApp.Admin",
     "nodeCodeApp.Login",
     "nodeCodeApp.Logout"
   ], function($rootScopeProvider){
@@ -45,19 +48,7 @@ angular
       });
   }])
   .run(configureDefaults)
-  .provider({
-//	  $exceptionHandler: function(){
-//		   var $log =  angular.injector(['ng']).get('$log');
-//	        var handler = function(exception, cause) {
-//	            alert("Exception:"+exception+":Cause:"+cause);
-//	            $log.error("Exception:"+exception+":Cause:"+cause);
-//	        };
-//
-//	        this.$get = function() {
-//	            return handler;
-//	        };
-//	    }
-  })
+  .provider({  })
   .service(service)
   .factory('TokenRefreshInterceptor',TokenRefreshInterceptor)
   .factory('ErrorHandler',ErrorHandler)
