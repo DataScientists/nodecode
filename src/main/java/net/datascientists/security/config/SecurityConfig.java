@@ -36,9 +36,7 @@ import net.datascientists.security.service.ExternalServiceAuthenticator;
 @Configuration
 @EnableWebSecurity
 @Order(2)
-@ImportResource({
-    "classpath:applicationContext.xml" 
-})
+@ImportResource("/WEB-INF/spring/applicationContext.xml")
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	
