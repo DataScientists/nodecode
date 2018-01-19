@@ -1,0 +1,15 @@
+.metadata
+bin/
+tmp/
+target/
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.class
+local.properties
+.settings/
+.project
+.classpath
+.recommenders
+/target/
