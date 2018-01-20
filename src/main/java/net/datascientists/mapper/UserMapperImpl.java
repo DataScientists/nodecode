@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import net.datascientists.security.model.User;
-import net.datascientists.security.model.UserProfile;
+import net.datascientists.entity.User;
+import net.datascientists.entity.UserRole;
 import net.datascientists.vo.UserProfileVO;
 import net.datascientists.vo.UserVO;
 
@@ -41,24 +41,24 @@ public class UserMapperImpl implements UserMapper{
 		vo.setPassword(entity.getPassword());
 		vo.setSsoId(entity.getSsoId());
 		vo.setState(entity.getState());
-		vo.setUserProfiles(convertToUserProfileVO(entity.getUserProfiles()));
+		vo.setUserProfiles(convertToUserProfileVO(entity.getUserRoles()));
 		return vo;
 	}
 
 	@Override
-	public Set<UserProfileVO> convertToUserProfileVO(Set<UserProfile> entityList) {
+	public Set<UserProfileVO> convertToUserProfileVO(Set<UserRole> entityList) {
 		if(entityList == null){
 			return null;
 		}
 		Set<UserProfileVO> set = new HashSet<>();
-		for(UserProfile entity:entityList){
+		for(UserRole entity:entityList){
 			set.add(convertToUserProfileVO(entity));
 		}
 		return set;
 	}
 
 	@Override
-	public UserProfileVO convertToUserProfileVO(UserProfile entity) {
+	public UserProfileVO convertToUserProfileVO(UserRole entity) {
 		if(entity == null){
 			return null;
 		}

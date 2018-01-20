@@ -3,8 +3,8 @@ package net.datascientists.mapper;
 import java.util.List;
 import java.util.Set;
 
-import net.datascientists.security.model.User;
-import net.datascientists.security.model.UserProfile;
+import net.datascientists.entity.User;
+import net.datascientists.entity.UserRole;
 import net.datascientists.vo.UserProfileVO;
 import net.datascientists.vo.UserVO;
 
@@ -14,7 +14,7 @@ public interface UserMapper {
 	
 	UserVO convertToUserVO(User entity);
 	
-	Set<UserProfileVO> convertToUserProfileVO(Set<UserProfile> entityList);
+	Set<UserProfileVO> convertToUserProfileVO(Set<UserRole> entityList);
 	
-	UserProfileVO convertToUserProfileVO(UserProfile entity);
+	UserProfileVO convertToUserProfileVO(UserRole entity);
 }
