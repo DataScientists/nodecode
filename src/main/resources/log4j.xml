@@ -4,7 +4,7 @@
 
 	<!-- A time/date based rolling appender -->
 	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="logs/farmersblockchain.log" />
+		<param name="File" value="logs/nodecode.log" />
 		<param name="Append" value="true" />
 		<param name="ImmediateFlush" value="true" />
 		<param name="MaxFileSize" value="200MB" />
