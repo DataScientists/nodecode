@@ -26,12 +26,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import net.datascientists.filter.AuthenticationFilter;
 import net.datascientists.filter.ManagementEndpointAuthenticationFilter;
-import net.datascientists.service.BackendAdminUsernamePasswordAuthenticationProvider;
-import net.datascientists.service.DaoServiceAuthenticator;
-import net.datascientists.service.DomainUsernamePasswordAuthenticationProvider;
-import net.datascientists.service.ExternalServiceAuthenticator;
-import net.datascientists.service.TokenAuthenticationProvider;
-import net.datascientists.service.TokenManager;
+import net.datascientists.service.security.BackendAdminUsernamePasswordAuthenticationProvider;
+import net.datascientists.service.security.DaoServiceAuthenticator;
+import net.datascientists.service.security.DomainUsernamePasswordAuthenticationProvider;
+import net.datascientists.service.security.ExternalServiceAuthenticator;
+import net.datascientists.service.security.TokenAuthenticationProvider;
+import net.datascientists.service.security.TokenManager;
 
 @Configuration
 @EnableWebSecurity

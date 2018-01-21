@@ -22,7 +22,8 @@ angular
     "nodeCodeApp.DisplayError",
     "nodeCodeApp.Admin",
     "nodeCodeApp.Login",
-    "nodeCodeApp.Logout"
+    "nodeCodeApp.Logout",
+    "nodeCodeApp.Node"
   ], function($rootScopeProvider){
 	  $rootScopeProvider.digestTtl(100);
   })

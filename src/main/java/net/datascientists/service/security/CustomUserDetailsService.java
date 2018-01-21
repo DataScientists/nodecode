@@ -1,4 +1,4 @@
-package net.datascientists.service;
+package net.datascientists.service.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.datascientists.entity.Roles;
 import net.datascientists.entity.User;
 import net.datascientists.entity.UserRole;
+import net.datascientists.service.UserService;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService{
@@ -38,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	    private List<GrantedAuthority> getGrantedAuthorities(User user){
 	        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 	         
-	        for(UserRole userRole : user.getUserRoles()){
+	        for(Roles userRole : user.getUserRoles()){
 	            //System.out.println("UserProfile : "+userProfile);
 	            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getType()));
 	        }

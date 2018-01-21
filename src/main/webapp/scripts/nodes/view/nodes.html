@@ -1,0 +1,12 @@
+<div ng-cloak>
+	<div>
+		<table ng-table="vm.tableParams" ng-cloak
+		class="table table-bordered table-hover 
+  table-condensed editable-table" show-filter="true">
+			<tr ng-repeat="node in $data">
+				<td title="'Node'" filter="{ node: 'text'}" sortable="'node'">
+					</td>
+			</tr>
+		</table>
+	</div>
+</div>

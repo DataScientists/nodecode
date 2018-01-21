@@ -1,10 +1,10 @@
-INSERT INTO `nodecode`.`app_user`
+INSERT INTO `nodecode`.`user`
 (
 `id`,
-`sso_id`,
+`ssoId`,
 `password`,
-`first_name`,
-`last_name`,
+`firstName`,
+`lastName`,
 `email`,
 `state`)
 VALUES
@@ -16,14 +16,14 @@ VALUES
 'int@yahoo.com',
 'Active');
 
-INSERT INTO `nodecode`.`user_profile`
+INSERT INTO `nodecode`.`roles`
 (`id`,
 `type`)
 VALUES
 (5,
 'ADMIN');
 
-INSERT INTO `nodecode`.`app_user_user_profile`
+INSERT INTO `nodecode`.`userrole`
 (`user_id`,
 `user_profile_id`)
 VALUES

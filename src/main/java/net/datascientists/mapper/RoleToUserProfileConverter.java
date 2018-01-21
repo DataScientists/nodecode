@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import net.datascientists.entity.UserRole;
-import net.datascientists.service.UserProfileService;
+import net.datascientists.entity.Roles;
+import net.datascientists.service.UserRoleService;
 
 @Component
-public class RoleToUserProfileConverter implements Converter<Object, UserRole>{
+public class RoleToUserProfileConverter implements Converter<Object, Roles>{
  
     @Autowired
-    UserProfileService userProfileService;
+    UserRoleService userProfileService;
  
-    public UserRole convert(Object element) {
+    public Roles convert(Object element) {
         Integer id = Integer.parseInt((String)element);
-        UserRole profile= userProfileService.findById(id);
+        Roles profile= userProfileService.findById(id);
         System.out.println("Profile : "+profile);
         return profile;
     }

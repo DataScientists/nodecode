@@ -5,13 +5,14 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PropUtil {
 
 	private static final String PROPERTY_FILENAME = "nodecode.properties";
 
-	private Logger log = Logger.getLogger(this.getClass());
+    private Logger log = LogManager.getLogger(this.getClass());
 	
 	private PropUtil() {
 		init(PROPERTY_FILENAME);

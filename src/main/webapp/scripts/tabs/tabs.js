@@ -36,6 +36,17 @@
                 }
             }
         }).state( {
+            name:'tabs.nodes',
+            url: '/nodes',
+            authenticate:true,
+            views:{
+                'nodes@tabs':{
+                    templateUrl : "scripts/nodes/view/nodes.html",
+                    controller: 'NodeCtrl as vm'
+
+                }
+            }
+        }).state( {
             name:'tabs.error',
         	url: '/displayerror/',
         	params: {

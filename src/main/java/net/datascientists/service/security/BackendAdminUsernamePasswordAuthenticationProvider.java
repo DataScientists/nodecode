@@ -1,4 +1,4 @@
-package net.datascientists.service;
+package net.datascientists.service.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;

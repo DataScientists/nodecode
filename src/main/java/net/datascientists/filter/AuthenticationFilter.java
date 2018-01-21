@@ -9,8 +9,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 
 import net.datascientist.constants.WSConstants;
-import net.datascientists.vo.TokenResponse;
+import net.datascientists.vo.TokenResponseVO;
 
 public class AuthenticationFilter extends GenericFilterBean {
 	
@@ -36,7 +36,8 @@ public class AuthenticationFilter extends GenericFilterBean {
 	public static final String USER_SESSION_KEY = "user";
 	private AuthenticationManager authenticationManager;
 	private UrlPathHelper urlPathHelper = new UrlPathHelper(); 
-	private static final Logger log = Logger.getLogger(AuthenticationFilter.class);
+
+	private Logger log = LogManager.getLogger(this.getClass());
 	
 
 	public AuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -89,8 +90,6 @@ public class AuthenticationFilter extends GenericFilterBean {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
 			log.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), authenticationException);
 		} finally {
-			MDC.remove(TOKEN_SESSION_KEY);
-			MDC.remove(USER_SESSION_KEY);
 		}
 	}
 
@@ -106,14 +105,11 @@ public class AuthenticationFilter extends GenericFilterBean {
 			tokenValue = encoder.encodePassword(authentication.getDetails()
 					.toString(), "secret_salt_password");
 		}
-		MDC.put(TOKEN_SESSION_KEY, tokenValue);
-
 		String userValue = "EMPTY";
 		if (authentication != null
 				&& !StringUtils.isEmpty(authentication.getPrincipal())) {
 			userValue = authentication.getPrincipal().toString();
 		}
-		MDC.put(USER_SESSION_KEY, userValue);
 	}
 
 	private HttpServletRequest asHttp(ServletRequest request) {
@@ -139,7 +135,7 @@ public class AuthenticationFilter extends GenericFilterBean {
 				resultOfAuthentication);
 		httpResponse.setStatus(HttpServletResponse.SC_OK);
 		
-		TokenResponse tokenResponse = (TokenResponse)resultOfAuthentication.getDetails();
+		TokenResponseVO tokenResponse = (TokenResponseVO)resultOfAuthentication.getDetails();
 //		tokenResponse.setFacRoleDDValues(UmexRespUtil.getFacRoleDDValues(tokenResponse.getUserInfo()));
 //		tokenResponse.setFacDDVals(UmexRespUtil.getFacilityDDValues(tokenResponse.getFacRoleDDValues()));
 //		tokenResponse.setRoleDDVals(UmexRespUtil.getRoleDDValues(tokenResponse.getFacRoleDDValues()));

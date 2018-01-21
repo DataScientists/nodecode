@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import net.datascientists.entity.User;
-import net.datascientists.entity.UserRole;
+import net.datascientists.entity.Roles;
 import net.datascientists.vo.UserProfileVO;
 import net.datascientists.vo.UserVO;
 
@@ -46,19 +46,19 @@ public class UserMapperImpl implements UserMapper{
 	}
 
 	@Override
-	public Set<UserProfileVO> convertToUserProfileVO(Set<UserRole> entityList) {
+	public Set<UserProfileVO> convertToUserProfileVO(Set<Roles> entityList) {
 		if(entityList == null){
 			return null;
 		}
 		Set<UserProfileVO> set = new HashSet<>();
-		for(UserRole entity:entityList){
+		for(Roles entity:entityList){
 			set.add(convertToUserProfileVO(entity));
 		}
 		return set;
 	}
 
 	@Override
-	public UserProfileVO convertToUserProfileVO(UserRole entity) {
+	public UserProfileVO convertToUserProfileVO(Roles entity) {
 		if(entity == null){
 			return null;
 		}

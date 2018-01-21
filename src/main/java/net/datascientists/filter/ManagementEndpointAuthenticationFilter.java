@@ -11,7 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -22,14 +23,14 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.google.common.base.Optional;
 
-import net.datascientists.service.BackendAdminUsernamePasswordAuthenticationToken;
+import net.datascientists.service.security.BackendAdminUsernamePasswordAuthenticationToken;
 
 public class ManagementEndpointAuthenticationFilter extends GenericFilterBean {
 
     private AuthenticationManager authenticationManager;
     private Set<String> managementEndpoints;
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
-    private static final Logger log = Logger.getLogger(ManagementEndpointAuthenticationFilter.class);
+    private Logger log = LogManager.getLogger(this.getClass());
 
     public ManagementEndpointAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;

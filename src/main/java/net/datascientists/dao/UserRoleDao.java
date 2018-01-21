@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.datascientists.entity.UserRole;
+import net.datascientists.entity.Roles;
 
 @Repository
 public class UserRoleDao{
@@ -19,27 +19,27 @@ public class UserRoleDao{
 	private SessionFactory sessionFactory;
 	
 	@SuppressWarnings("unchecked")
-    public List<UserRole> findAll(){
+    public List<Roles> findAll(){
 		final Criteria crit = createEntityCriteria();
         crit.addOrder(Order.asc("type"));
-        return (List<UserRole>)crit.list();
+        return (List<Roles>)crit.list();
     }
 
 	private Criteria createEntityCriteria() {
 		final Session session = sessionFactory.getCurrentSession();
-		final Criteria crit = session.createCriteria(UserRole.class);
+		final Criteria crit = session.createCriteria(Roles.class);
 		return crit;
 	}
      
-    public UserRole findById(long id) {
+    public Roles findById(long id) {
     	final Session session = sessionFactory.getCurrentSession();
-        return (UserRole)session.get(UserRole.class,id);
+        return (Roles)session.get(Roles.class,id);
     }
      
-    public UserRole findByType(String type) {
+    public Roles findByType(String type) {
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("type", type));
-        return (UserRole) crit.uniqueResult();
+        return (Roles) crit.uniqueResult();
     }
 	
 }

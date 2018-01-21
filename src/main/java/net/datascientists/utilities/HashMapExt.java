@@ -1,4 +1,4 @@
-package net.datascientists.util;
+package net.datascientists.utilities;
 
 import java.util.ArrayList;
 import java.util.Collection;

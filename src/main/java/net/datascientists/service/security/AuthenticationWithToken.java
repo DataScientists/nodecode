@@ -1,4 +1,4 @@
-package net.datascientists.service;
+package net.datascientists.service.security;
 
 import java.util.Collection;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
-import net.datascientists.vo.TokenResponse;
+import net.datascientists.vo.TokenResponseVO;
 
 public class AuthenticationWithToken extends PreAuthenticatedAuthenticationToken {
 
@@ -25,12 +25,12 @@ public class AuthenticationWithToken extends PreAuthenticatedAuthenticationToken
 		super(aPrincipal, aCredentials, anAuthorities);
 	}
 
-	public void setToken(TokenResponse token) {
+	public void setToken(TokenResponseVO token) {
 		setDetails(token);
 	}
 
-	public TokenResponse getToken() {
-		return (TokenResponse) getDetails();
+	public TokenResponseVO getToken() {
+		return (TokenResponseVO) getDetails();
 	}
 
 	public Date getExpiry() {

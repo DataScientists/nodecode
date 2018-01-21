@@ -1,4 +1,4 @@
-package net.datascientists.service;
+package net.datascientists.service.security;
 
 
 import java.time.LocalDateTime;
@@ -20,8 +20,9 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import com.google.common.base.Optional;
 
 import net.datascientists.entity.User;
-import net.datascientists.entity.UserRole;
-import net.datascientists.vo.TokenResponse;
+import net.datascientists.entity.Roles;
+import net.datascientists.service.UserService;
+import net.datascientists.vo.TokenResponseVO;
 
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
@@ -51,7 +52,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		AuthenticatedExternalWebService authenticatedExternalWebService = new 
 				AuthenticatedExternalWebService(new User(), null,
 						getGrantedAuthorities(userObj));
-		TokenResponse tokenResponse = new TokenResponse();
+		TokenResponseVO tokenResponse = new TokenResponseVO();
 		tokenResponse.setToken(tokenManager.createTokenForUser(user,
 				authenticatedExternalWebService.getAuthorities()));
 		authenticatedExternalWebService.setToken(tokenResponse);
@@ -80,7 +81,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 	private List<GrantedAuthority> getGrantedAuthorities(User user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
          
-        for(UserRole userRole : user.getUserRoles()){
+        for(Roles userRole : user.getUserRoles()){
             //System.out.println("UserProfile : "+userProfile);
             authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getType()));
         }

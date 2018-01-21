@@ -1,4 +1,4 @@
-package net.datascientists.service;
+package net.datascientists.service.security;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,11 +13,14 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class TokenManager {
 
@@ -26,7 +29,7 @@ public class TokenManager {
 	private static final String SEPARATOR_SPLITTER = "\\.";
 	private static final String OBJECT_SPLITTER = "@@";
 
-	private Logger logger = Logger.getLogger(TokenManager.class);
+    private Logger logger = LogManager.getLogger(this.getClass());
 
 	private final Mac hmac;
 

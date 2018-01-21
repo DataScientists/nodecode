@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import net.datascientists.util.HashMapExt;
+import net.datascientists.utilities.HashMapExt;
 
-public class TokenResponse {
+public class TokenResponseVO {
     @JsonProperty
     private String token;
     @JsonProperty

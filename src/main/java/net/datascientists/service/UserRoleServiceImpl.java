@@ -7,24 +7,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.datascientists.dao.UserRoleDao;
-import net.datascientists.entity.UserRole;
+import net.datascientists.entity.Roles;
 
 @Transactional
 @Service
-public class UserProfileServiceImpl implements UserProfileService{
+public class UserRoleServiceImpl implements UserRoleService{
     
    @Autowired
    private UserRoleDao dao;
     
-   public List<UserRole> findAll() {
+   public List<Roles> findAll() {
        return dao.findAll();
    }
 
-   public UserRole findByType(String type){
+   public Roles findByType(String type){
        return dao.findByType(type);
    }
 
-   public UserRole findById(int id) {
+   public Roles findById(int id) {
        return dao.findById(id);
    }
 }
