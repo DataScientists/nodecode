@@ -13,3 +13,7 @@ local.properties
 .classpath
 .recommenders
 /target/
+
+*.classpath
+*.jsdtscope
+.settings/.jsdtscope
