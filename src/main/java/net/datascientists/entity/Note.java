@@ -1,101 +1,73 @@
 package net.datascientists.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 @Entity 
-public class Note implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id @GeneratedValue
-	private long idNote;
+public class Note {
+	@Id 
+	@GeneratedValue
+	private long id;
+		
+	private String name;
+	private String description;	
+	
+	private Integer deleted;
+	private Date lastUpdated;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Node node;
-	private String type;
 	
-	private long interviewId;
-
-	@Column(length=2048)
-	private String text;
-	private Date lastUpdated;
-	private Integer deleted;
-
 	public Note() {
 
 	}
-
-	public Note(long idNote) {
-		this.idNote = idNote;
+	public long getId() {
+		return id;
 	}
-
-	public Note(String text) {
-		this.text = text;
+	public void setId(long id) {
+		this.id = id;
 	}
-
-	public long getIdNote() {
-		return idNote;
+	public String getName() {
+		return name;
 	}
-
-	public void setIdNote(long idNote) {
-		this.idNote = idNote;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public String getText() {
-		return text;
+	public String getDescription() {
+		return description;
 	}
-
-	public void setText(String text) {
-		this.text = text;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
-	public Date getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
-	}
-
-	public Integer getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public Node getNode() {
 		return node;
 	}
-
 	public void setNode(Node node) {
 		this.node = node;
+	}	
+	public Integer getDeleted() {
+		return deleted;
 	}
-
-	public long getInterviewId() {
-		return interviewId;
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}		
+	public Date getLastUpdated() {
+		return lastUpdated;
 	}
-
-	public void setInterviewId(long interviewId) {
-		this.interviewId = interviewId;
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
-
+	
+	@Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
+	
 }

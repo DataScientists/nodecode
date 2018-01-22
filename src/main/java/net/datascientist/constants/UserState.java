@@ -1,6 +1,6 @@
 package net.datascientist.constants;
 
-public enum State {
+public enum UserState {
 	 
     ACTIVE("Active"),
     INACTIVE("Inactive"),
@@ -9,23 +9,17 @@ public enum State {
      
     private String state;
      
-    private State(final String state){
+    private UserState(final String state){
         this.state = state;
-    }
-     
+    }   
     public String getState(){
         return this.state;
     }
- 
+    public String getName(){
+        return this.name();
+    }
     @Override
     public String toString(){
         return this.state;
     }
- 
- 
-    public String getName(){
-        return this.name();
-    }
- 
- 
 }

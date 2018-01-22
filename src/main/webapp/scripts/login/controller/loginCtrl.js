@@ -1,16 +1,11 @@
 (function() {
-
-    angular.module('nodeCodeApp.Login').controller('LoginCtrl',
-            LoginCtrl);
-
-    LoginCtrl.$inject = ['$state','ngToast','$timeout',
-                         '$scope','$http','$rootScope', 
-                         'dataBeanService', '$window','loginService',
-                         '$sessionStorage','AuthenticationService','$mdDialog'];
-    function LoginCtrl($state, ngToast, $timeout, 
-    		$scope, $http, $rootScope, 
-    		dataBeanService,$window, loginService,
-    		$sessionStorage,auth,$mdDialog) {
+    angular.module('nodeCodeApp.Login').controller('LoginCtrl',LoginCtrl);
+    LoginCtrl.$inject = ['$state','ngToast','$timeout','$scope','$http',
+    	'$rootScope','dataBeanService', '$window','loginService','$sessionStorage',
+    	'AuthenticationService','$mdDialog'];
+    function LoginCtrl($state, ngToast, $timeout, $scope, $http, 
+    		$rootScope, dataBeanService, $window, loginService, $sessionStorage,
+    		AuthenticationService,$mdDialog) {
         var vm = this;
         $scope.user = {};
         vm.userId = $sessionStorage.userId;
@@ -25,52 +20,42 @@
         	if(!vm.isAuthenticated){
         		vm.userId = '';
         	}        	
-        }
-        
+        }      
         if(dataBeanService.getStatetransitionHasErr() === '1') {
             vm.hasErrMsg = true;
             vm.errMsg = 'NOT_AUTH'
         }
-
         vm.login = function() {
-
-            if(!(angular.isUndefinedOrNull(vm.userId))
-                    && !(angular.isUndefinedOrNull(vm.password))){
+            if(!(angular.isUndefinedOrNull(vm.userId)) && !(angular.isUndefinedOrNull(vm.password))){
                 vm.hasErrMsg = false;
-
-                var res = loginService.getLoginResp(vm.userId, vm.password);
-
-                res.then(function(response) {
+                loginService.getLoginResp(vm.userId, vm.password).then(function(response){
                 	var data = response.data;
                 	var status = response.status;
-                    if(status === 200) {
-
+                    if(status === 200) {       	
                     	$sessionStorage.userId = vm.userId;
                     	$sessionStorage.token = data.token;
                     	$sessionStorage.roles = data.userInfo.roles;
                         vm.isAuthenticated = true;                      
                         $sessionStorage.isAuthenticated = true;
-                        if(auth.userHasPermission(['ROLE_USER'])){
+                        if(AuthenticationService.userHasPermission(['USER'])){
                         	$state.go('tabs.reports');
-                        }else if(auth.userHasPermission(['ROLE_ADMIN'])){
+                        }else if(AuthenticationService.userHasPermission(['ADMIN'])){
                         	$state.go('tabs.admin');
-                        }
-                        else{                       	
+                        }else{                       	
                         	$state.go('error',{error:"No role defined for user "+vm.userId});
                         }  
                     }else if (status === 401) {
                         vm.hasErrMsg = true;
-                        vm.errMsg = "Hmm, that's not the right password. Please try again or email info@occideas.org to request a new one.";
+                        vm.errMsg = "Hmm, that's not the right password. Please try again or contact your nearest data scientist for help.";
                     }else {
                         vm.hasErrMsg = true;
                         vm.errMsg = 'failure message: ' + JSON.stringify({data: data}) +' status: '+status;
                     }
 
                 });
-            }
-            else{
+            }else{
                 vm.hasErrMsg = true;
-                vm.errMsg = 'LoginId / Password is required.';
+                vm.errMsg = 'Username and Password is Required.';
             }
         };
 

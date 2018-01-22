@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService{
         return dao.findById(id);
     }
  
-    public User findBySso(String sso) {
-        return dao.findBySSO(sso);
+    public User findBySso(String userName) {
+        return dao.findByUserName(userName);
     }
 
 	@Override
 	public List<UserVO> getUserRoles() {
-		return mapper.convertToUserVOList(dao.findAll());
+		return mapper.convertToUserVOList(dao.list());
 	}
 	
 }

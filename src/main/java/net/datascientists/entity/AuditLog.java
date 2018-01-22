@@ -1,92 +1,71 @@
 package net.datascientists.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "AuditLog")
-public class AuditLog implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+public class AuditLog {
 	@Id
-	@Column(name = "id")
+	@GeneratedValue
 	private long id;
-	@Column(name = "username")
-	private String username;
-	@Column(name = "user_type")
-	private String userType;
-	@Column(name = "action")
+	private String userName;
+	private String userRole;
 	private String action;
-	@Column(name = "method")
 	private String method;
-	@Column(name = "arguments")
 	private byte[] arguments;
-	@Column(name = "date")
-	private Timestamp date;
-
+	
+	private Integer deleted;
+	private Date lastUpdated;
+	
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
+	}	
+	public String getUserName() {
+		return userName;
 	}
-
-	public String getUsername() {
-		return username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public String getUserRole() {
+		return userRole;
 	}
-
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 	public String getAction() {
 		return action;
 	}
-
 	public void setAction(String action) {
 		this.action = action;
 	}
-
-	public Timestamp getDate() {
-		return date;
-	}
-
-	public void setDate(Timestamp date) {
-		this.date = date;
-	}
-
 	public String getMethod() {
 		return method;
 	}
-
 	public void setMethod(String method) {
 		this.method = method;
 	}
-
 	public byte[] getArguments() {
 		return arguments;
 	}
-
 	public void setArguments(byte[] arguments) {
 		this.arguments = arguments;
 	}
-
-	public String getUserType() {
-		return userType;
+	public Integer getDeleted() {
+		return deleted;
 	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
 	}
-
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}	
 }

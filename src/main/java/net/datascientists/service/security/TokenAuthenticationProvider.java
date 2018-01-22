@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import com.google.common.base.Optional;
 
 import net.datascientists.entity.User;
-import net.datascientists.entity.Roles;
+import net.datascientists.entity.Role;
 import net.datascientists.service.UserService;
 import net.datascientists.vo.TokenResponseVO;
 
@@ -81,9 +81,9 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 	private List<GrantedAuthority> getGrantedAuthorities(User user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
          
-        for(Roles userRole : user.getUserRoles()){
+        for(Role userRole : user.getRoles()){
             //System.out.println("UserProfile : "+userProfile);
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getType()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getName()));
         }
         return authorities;
     }

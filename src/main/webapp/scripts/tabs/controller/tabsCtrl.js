@@ -6,14 +6,14 @@
     function TabsCtrl($scope, $state, $rootScope, $log, $stickyState, auth) {
         $scope.loading = false;
         $scope.tabOptions = [];
-        if (auth.isLoggedIn() && auth.userHasPermission(['ROLE_ADMIN', 'ROLE_ADMIN'])) {
+        if (auth.isLoggedIn() && auth.userHasPermission(['ADMIN'])) {
         	$scope.tabOptions.push({
         		state: "tabs.admin",
         		data: ""
         	});
         }
         
-        if (auth.isLoggedIn() && auth.userHasPermission(['ROLE_USER','ROLE_ADMIN'])) {
+        if (auth.isLoggedIn() && auth.userHasPermission(['USER','ADMIN'])) {
             $scope.tabOptions.push({
                 state: "tabs.nodes",
                 data: ""
@@ -49,14 +49,14 @@
         var tabs = [];
         tabs.selected = null;
         tabs.previous = null;
-        if (auth.isLoggedIn() && auth.userHasPermission(['ROLE_ADMIN', 'ROLE_ADMIN'])) {
+        if (auth.isLoggedIn() && auth.userHasPermission(['ADMIN'])) {
         	tabs.push({
                 title: 'Admin',
                 viewName: 'admin@tabs'
             });
         }
         
-        if (auth.isLoggedIn() && auth.userHasPermission(['ROLE_USER', 'ROLE_ADMIN'])) {
+        if (auth.isLoggedIn() && auth.userHasPermission(['USER', 'ADMIN'])) {
         	tabs.push({
                 title: 'Nodes',
                 viewName: 'nodes@tabs'

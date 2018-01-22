@@ -66,9 +66,6 @@ public class NoteRestController implements BaseRestController<NoteVO>{
     @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
     @Produces(value=MediaType.APPLICATION_JSON_VALUE)
 	public Response create(NoteVO json) {
-		if(CommonUtil.isReadOnlyEnabled()){
-			return Response.status(Status.FORBIDDEN).build();
-		}
 		try{
 			service.create(json);
 		}catch(Throwable e){
@@ -83,9 +80,6 @@ public class NoteRestController implements BaseRestController<NoteVO>{
     @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
     @Produces(value=MediaType.APPLICATION_JSON_VALUE)
 	public Response update(NoteVO json) {
-		if(CommonUtil.isReadOnlyEnabled()){
-			return Response.status(Status.FORBIDDEN).build();
-		}
 		try{
 			service.update(json);
 		}catch(Throwable e){
@@ -98,9 +92,6 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@Path(value="/delete")
 	@POST
 	public Response delete(NoteVO json) {
-		if(CommonUtil.isReadOnlyEnabled()){
-			return Response.status(Status.FORBIDDEN).build();
-		}
 		try{
 			service.delete(json);
 		}catch(Throwable e){

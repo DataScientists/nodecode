@@ -2,9 +2,6 @@ package net.datascientists.exceptions;
 
 public class GenericException extends Throwable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String message;
 	private Throwable e;
@@ -13,23 +10,16 @@ public class GenericException extends Throwable {
 		this.message = message;
 		this.e = e;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 	public Throwable getE() {
 		return e;
 	}
-
 	public void setE(Throwable e) {
 		this.e = e;
 	}
-	
-	
-
 }

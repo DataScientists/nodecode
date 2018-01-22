@@ -2,14 +2,14 @@ package net.datascientists.service;
 
 import java.util.List;
 
-import net.datascientists.entity.Roles;
+import net.datascientists.entity.Role;
 
 public interface UserRoleService {
 
-	List<Roles> findAll();
+	List<Role> findAll();
     
-	Roles findByType(String type);
+	Role findByType(String type);
      
-	Roles findById(int id);
+	Role findById(int id);
 	
 }

@@ -1,21 +1,56 @@
 package net.datascientists.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 import net.datascientists.entity.Note;
 import net.datascientists.vo.NoteVO;
 
-@Mapper(componentModel = "spring")
-public interface NoteMapper {
-
-	NoteVO convertToNoteVO(Note note);
-	
-	List<NoteVO> convertToNoteVOList(List<Note> note);
-
-	Note convertToNote(NoteVO nodeVO);
-	
-	List<Note> convertToNoteList(List<NoteVO> nodeVO);
-	
+@Component
+public class NoteMapper {
+ 
+    public NoteVO convertToVO(Note note) {
+        if (note == null) {
+            return null;
+        }
+        NoteVO noteVO = new NoteVO();
+        noteVO.setId(note.getId());
+        noteVO.setDeleted(note.getDeleted());
+        noteVO.setLastUpdated(note.getLastUpdated());
+        		
+        return noteVO;
+    }
+	public Note convertToEntity(NoteVO noteVO) {
+		if(noteVO == null){
+			return null;
+		}
+		Note note = new Note();
+		note.setId(noteVO.getId()); 
+		note.setDeleted(noteVO.getDeleted());
+        note.setLastUpdated(noteVO.getLastUpdated());
+        
+		return note;
+	}	
+	public List<Note> convertToEntityList(List<NoteVO> noteVOs) {
+		if (noteVOs == null) {
+            return null;
+        }
+        List<Note> list = new ArrayList<Note>();
+        for (NoteVO note : noteVOs) {       	
+        	list.add(convertToEntity(note));       	
+        }
+        return list;
+	}	
+	public List<NoteVO> convertToVOList(List<Note> entityList) {
+		if (entityList == null) {
+            return null;
+        }
+        List<NoteVO> list = new ArrayList<NoteVO>();
+        for (Note entity : entityList) {
+            list.add((NoteVO)convertToVO(entity));
+        }
+        return list;
+	}		
 }

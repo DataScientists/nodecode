@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class NoteServiceImpl implements NoteService {
+public class NoteServiceImpl {
 
 	@Autowired
 	private NoteDao dao;
@@ -23,39 +23,37 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private NoteMapper mapper;
 
-	@Override
+	
 	public List<NoteVO> listAll() {
-		return mapper.convertToNoteVOList(dao.getAllActive());
+		List<NoteVO> retValue = new ArrayList<NoteVO>();
+		List <Note> notes = dao.list();
+		retValue = mapper.convertToVOList(notes);
+		return retValue;
 	}
 
-	@Override
+	
 	public List<NoteVO> findById(Long id) {
-		Note note = dao.get(id);
-		NoteVO noteVO = mapper.convertToNoteVO(note);
+		Note note = dao.findById(id);
+		NoteVO noteVO = mapper.convertToVO(note);
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		list.add(noteVO);
 		return list;
 	}
 
-	@Override
+	
 	public NoteVO create(NoteVO o) {
-		Note noteEntity = dao.save(mapper.convertToNote(o));
-		return mapper.convertToNoteVO(noteEntity);
+		Note noteEntity = dao.save(mapper.convertToEntity(o));
+		return mapper.convertToVO(noteEntity);
 	}
 
-	@Override
-	public void update(NoteVO o) {
-		dao.saveOrUpdate(mapper.convertToNote(o));
+	
+	public void update(NoteVO vo) {
+		Note note = mapper.convertToEntity(vo);
+		dao.save(note);
 	}
 
-	@Override
-	public void delete(NoteVO o) {
-		dao.delete(mapper.convertToNote(o));
+	
+	public void delete(NoteVO vo) {
+		dao.deleteSoft(mapper.convertToEntity(vo));
 	}
-
-    @Override
-    public List<NoteVO> getListByInterview(long interviewId) {
-        List<Note> list = dao.getListByInterview(interviewId);
-        return mapper.convertToNoteVOList(list);
-    }
 }

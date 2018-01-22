@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.datascientists.entity.Roles;
+import net.datascientists.entity.Role;
 import net.datascientists.entity.User;
 import net.datascientists.entity.UserRole;
 import net.datascientists.service.UserService;
@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	            System.out.println("User not found");
 	            throw new UsernameNotFoundException("Username not found"); 
 	        }
-	            return new org.springframework.security.core.userdetails.User(user.getSsoId(), user.getPassword(), 
+	            return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), 
 	                 user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
 	    }
 	 
@@ -40,9 +40,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 	    private List<GrantedAuthority> getGrantedAuthorities(User user){
 	        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 	         
-	        for(Roles userRole : user.getUserRoles()){
+	        for(Role userRole : user.getRoles()){
 	            //System.out.println("UserProfile : "+userProfile);
-	            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getType()));
+	            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getName()));
 	        }
 	        System.out.print("authorities :"+authorities);
 	        return authorities;

@@ -9,39 +9,40 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import net.datascientists.entity.Note;
+import net.datascientists.entity.Node;
 
 @Repository
-public class NoteDao {
+public class NodeDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void deleteSoft(Note note){
-    	note.setDeleted(1);
-        sessionFactory.getCurrentSession().saveOrUpdate(note);
+	public void deleteSoft(Node node){
+    	node.setDeleted(1);
+        sessionFactory.getCurrentSession().saveOrUpdate(node);
     }
-    public void deleteHard(Note note){
-        sessionFactory.getCurrentSession().delete(note);
+    public void deleteHard(Node node){
+        sessionFactory.getCurrentSession().delete(node);
     }
-	public Note findById(Long id){
-		return (Note) sessionFactory.getCurrentSession().get(Note.class, id);
+	public Node findById(Long id){
+		Node retValue = (Node) sessionFactory.getCurrentSession().get(Node.class, id);
+		return retValue;
     }
-	public Note save(Note note){
-    	sessionFactory.getCurrentSession().saveOrUpdate(note);
-    	return note;
+	public Node save(Node node){
+    	sessionFactory.getCurrentSession().saveOrUpdate(node);
+    	return node;
     }
     @SuppressWarnings("unchecked")
-	public List<Note> list() {
+	public List<Node> list() {
     	final Session session = sessionFactory.getCurrentSession();
-    	final Criteria crit = session.createCriteria(Note.class);
+    	final Criteria crit = session.createCriteria(Node.class);
     	crit.add(Restrictions.eq("deleted", 0));
     	return crit.list();
     }
     @SuppressWarnings("unchecked")
-   	public List<Note> listDeleted() {
+   	public List<Node> listDeleted() {
     	final Session session = sessionFactory.getCurrentSession();
-        final Criteria crit = session.createCriteria(Note.class);
+        final Criteria crit = session.createCriteria(Node.class);
         crit.add(Restrictions.eq("deleted", 1));
         return crit.list();
     } 

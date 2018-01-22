@@ -1,8 +1,6 @@
 package net.datascientists.service.audit;
 
-import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -16,7 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.datascientists.dao.IAuditDao;
+import net.datascientists.dao.AuditDao;
 import net.datascientists.entity.AuditLog;
 import net.datascientists.service.security.TokenManager;
 import net.datascientists.vo.TokenResponseVO;
@@ -27,26 +25,26 @@ public class AuditAspect {
 	private Logger log = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private IAuditDao dao;
+	private AuditDao dao;
 
 	@Before(value = "@annotation(auditable)")
 	@Transactional
 	public void logTheAuditActivity(JoinPoint aPoint, Auditable auditable) {
 		try{
-		AuditLog auditLog = new AuditLog();
-		auditLog.setUsername(getUserName());
-		auditLog.setUserType(getRoles());
-		auditLog.setAction(auditable.actionType().getValue());
-		String arguments = getArgs(aPoint.getArgs());
-		String[] split = aPoint.getThis().toString().split("\\.");
-		String classNameLast = split[split.length - 1];
-		String methodInvocation = classNameLast.substring(0, classNameLast.indexOf("@")) + "-"
-				+ aPoint.getSignature().getName();
-		if (arguments.length() > 0) {
-			auditLog.setArguments(arguments.getBytes());
-		}
-		auditLog.setMethod(methodInvocation);
-		auditLog.setDate(new Timestamp(new Date().getTime()));
+			AuditLog auditLog = new AuditLog();
+			auditLog.setUserName(getUserName());
+			//auditLog.setUserType(getRoles());
+			auditLog.setAction(auditable.actionType().getValue());
+			String arguments = getArgs(aPoint.getArgs());
+			String[] split = aPoint.getThis().toString().split("\\.");
+			String classNameLast = split[split.length - 1];
+			String methodInvocation = classNameLast.substring(0, classNameLast.indexOf("@")) + "-"
+					+ aPoint.getSignature().getName();
+			if (arguments.length() > 0) {
+				auditLog.setArguments(arguments.getBytes());
+			}
+			auditLog.setMethod(methodInvocation);
+			//auditLog.setDate(new Timestamp(new Date().getTime()));
 			dao.save(auditLog);
 		}catch(Throwable throwable){
 			log.error("Error on saving audit logs.",throwable);

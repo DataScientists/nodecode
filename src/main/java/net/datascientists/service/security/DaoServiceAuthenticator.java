@@ -9,9 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import net.datascientist.constants.RoleType;
+import net.datascientists.entity.Role;
 import net.datascientists.entity.User;
-import net.datascientists.entity.Roles;
 import net.datascientists.service.UserService;
 import net.datascientists.vo.TokenResponseVO;
 
@@ -49,19 +48,14 @@ public class DaoServiceAuthenticator implements ExternalServiceAuthenticator {
 		}
 
         return authenticatedExternalWebService;
-    }
-    
+    }  
     private List<GrantedAuthority> getGrantedAuthorities(User user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-         
-        for(Roles userRole : user.getUserRoles()){
-            System.out.println("UserProfile : "+userRole);
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getType()));
-        }
-        if(authorities.isEmpty()){
-        	authorities.add(new SimpleGrantedAuthority("ROLE_"+RoleType.USER.name()));
+        
+        for(Role userRole : user.getRoles()){
+            System.out.println("User log in with role : "+userRole.getName());
+            authorities.add(new SimpleGrantedAuthority(userRole.getName()));
         }
         return authorities;
     }
-
 }

@@ -1,33 +1,32 @@
-INSERT INTO `nodecode`.`user`
+INSERT INTO `User`
 (
-`id`,
-`ssoId`,
+`userName`,
 `password`,
 `firstName`,
 `lastName`,
 `email`,
 `state`)
 VALUES
-(1,
+(
 'admin',
-'$2a$10$8.YE0MMFjQE3PGOBaPl2JutKIhsMfL4l69I7aMngdKqUZgGsFEKha',
+'$2a$10$A3xIwkcNXV27bS2h1Ha7/uxLbvMLLk74k1JrkhhmZmD92P1O0Idz2',
 'admin',
-'admin',
-'int@yahoo.com',
+'P@ssw0rd',
+'some@email.com',
 'Active');
 
-INSERT INTO `nodecode`.`roles`
-(`id`,
-`type`)
+INSERT INTO `Role`
+(
+`name`)
 VALUES
-(5,
+(
 'ADMIN');
 
-INSERT INTO `nodecode`.`userrole`
-(`user_id`,
-`user_profile_id`)
+INSERT INTO `UserRole`
+(`userId`,
+`roleId`)
 VALUES
 (1,
-5);
+1);
 
 

@@ -1,52 +1,35 @@
 package net.datascientists.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SelectBeforeUpdate;
 
 @Entity
-@DynamicUpdate(value = true)
-@DynamicInsert(value = true)
-@SelectBeforeUpdate(value = true)
-@Table(name = "UserRole")
-@IdClass(UserUserProfilePK.class)
-public class UserRole implements Serializable {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
+public class UserRole {
     @Id
-    @Column(name = "user_id")
-    private int userId;
-    @Id
-    @Column(name = "user_profile_id")
-    private int userProfileId;
+    @GeneratedValue
+    private long id;
+       
+	private long userId;
+    private long roleId;
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getUserProfileId() {
-        return userProfileId;
-    }
-
-    public void setUserProfileId(int userProfileId) {
-        this.userProfileId = userProfileId;
-    }
-
+    public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	public long getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
+	}
 }
 
