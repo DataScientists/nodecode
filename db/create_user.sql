@@ -22,9 +22,9 @@ VALUES
 (
 'ADMIN');
 
-INSERT INTO `UserRole`
-(`userId`,
-`roleId`)
+INSERT INTO `User_Role`
+(`users_id`,
+`roles_id`)
 VALUES
 (1,
 1);
