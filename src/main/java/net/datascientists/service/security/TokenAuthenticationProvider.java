@@ -45,7 +45,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		}
 		validateToken(token.get());
 		String user = tokenManager.parseUsernameFromToken(token.get());
-		User userObj = userService.findBySso(user);
+		User userObj = userService.findByUserName(user);
 		if(userObj == null){
 			return null;
 		}
@@ -82,7 +82,6 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
          
         for(Role userRole : user.getRoles()){
-            //System.out.println("UserProfile : "+userProfile);
             authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getName()));
         }
         return authorities;

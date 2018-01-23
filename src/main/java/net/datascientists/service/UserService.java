@@ -11,7 +11,7 @@ public interface UserService {
     
     User findById(int id);
      
-    User findBySso(String sso);
+    User findByUserName(String sso);
     
     List<UserVO> getUserRoles();
 	

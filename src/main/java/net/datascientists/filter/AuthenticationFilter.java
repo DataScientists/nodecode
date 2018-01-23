@@ -14,12 +14,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.encoding.MessageDigestPasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -78,7 +76,6 @@ public class AuthenticationFilter extends GenericFilterBean {
 			}
 
 			log.debug("AuthenticationFilter is passing request down the filter chain");
-			addSessionContextToLogging();
 			chain.doFilter(request, response);
 		} catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
 			SecurityContextHolder.clearContext();
@@ -90,25 +87,6 @@ public class AuthenticationFilter extends GenericFilterBean {
 			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
 			log.error(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), authenticationException);
 		} finally {
-		}
-	}
-
-	private void addSessionContextToLogging() {
-		Authentication authentication = SecurityContextHolder.getContext()
-				.getAuthentication();
-		String tokenValue = "EMPTY";
-		if (authentication != null
-				&& !StringUtils.isEmpty(authentication.getDetails())){
-			MessageDigestPasswordEncoder encoder = new MessageDigestPasswordEncoder(
-					"SHA-1");
-			//Salt password should be stored in JNDI
-			tokenValue = encoder.encodePassword(authentication.getDetails()
-					.toString(), "secret_salt_password");
-		}
-		String userValue = "EMPTY";
-		if (authentication != null
-				&& !StringUtils.isEmpty(authentication.getPrincipal())) {
-			userValue = authentication.getPrincipal().toString();
 		}
 	}
 
@@ -134,13 +112,8 @@ public class AuthenticationFilter extends GenericFilterBean {
 		SecurityContextHolder.getContext().setAuthentication(
 				resultOfAuthentication);
 		httpResponse.setStatus(HttpServletResponse.SC_OK);
-		
 		TokenResponseVO tokenResponse = (TokenResponseVO)resultOfAuthentication.getDetails();
-//		tokenResponse.setFacRoleDDValues(UmexRespUtil.getFacRoleDDValues(tokenResponse.getUserInfo()));
-//		tokenResponse.setFacDDVals(UmexRespUtil.getFacilityDDValues(tokenResponse.getFacRoleDDValues()));
-//		tokenResponse.setRoleDDVals(UmexRespUtil.getRoleDDValues(tokenResponse.getFacRoleDDValues()));
 		String tokenJsonResponse = new ObjectMapper().writeValueAsString(tokenResponse);
-		
 		httpResponse.addHeader("Content-Type", "application/json");
 		httpResponse.getWriter().print(tokenJsonResponse);
 	}

@@ -25,7 +25,7 @@ public class DaoServiceAuthenticator implements ExternalServiceAuthenticator {
     @Override
     public AuthenticatedExternalWebService authenticate(String username, String password) {
     	 AuthenticatedExternalWebService authenticatedExternalWebService = null;
-    	 User user = userService.findBySso(username);
+    	 User user = userService.findByUserName(username);
         try {
         	if(user!=null && !StringUtils.isEmpty(password)){
         		if(passwordEncoder.matches(password,user.getPassword())){

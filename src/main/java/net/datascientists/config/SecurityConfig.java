@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -25,8 +24,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import net.datascientists.filter.AuthenticationFilter;
-import net.datascientists.filter.ManagementEndpointAuthenticationFilter;
-import net.datascientists.service.security.BackendAdminUsernamePasswordAuthenticationProvider;
 import net.datascientists.service.security.DaoServiceAuthenticator;
 import net.datascientists.service.security.DomainUsernamePasswordAuthenticationProvider;
 import net.datascientists.service.security.ExternalServiceAuthenticator;
@@ -38,12 +35,7 @@ import net.datascientists.service.security.TokenManager;
 @Order(2)
 @ImportResource("/WEB-INF/spring/applicationContext.xml")
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
 	
-	
-	@Value("${backend.admin.role}")
-	private String backendAdminRole;
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().sessionManagement()
@@ -51,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.and()
 				.authorizeRequests()
 				.antMatchers(actuatorEndpoints())
-				.hasRole(backendAdminRole)
+				.hasAnyRole()
 				.anyRequest()
 				.authenticated()
 				.and()
@@ -61,9 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.authenticationEntryPoint(unauthorizedEntryPoint());
 
 		http.addFilterBefore(new AuthenticationFilter(authenticationManager()),
-				BasicAuthenticationFilter.class).addFilterBefore(
-				new ManagementEndpointAuthenticationFilter(
-						authenticationManager()),
 				BasicAuthenticationFilter.class);
 
 	}
@@ -96,13 +85,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			throws Exception {
 		auth.authenticationProvider(
 				domainUsernamePasswordAuthenticationProvider())
-				.authenticationProvider(
-						backendAdminUsernamePasswordAuthenticationProvider())
 				.authenticationProvider(tokenAuthenticationProvider());
 	}
 
 	private String[] actuatorEndpoints() {
-		return new String[] { "/web", "/mobile", "/desktop" };
+		return new String[] { "/web"};
 	}
 	
 	@Bean
@@ -118,11 +105,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Bean
 	public AuthenticationProvider domainUsernamePasswordAuthenticationProvider() {
 		return new DomainUsernamePasswordAuthenticationProvider(getExternalServiceAuthenticator(), tokenManager());
-	}
-
-	@Bean
-	public AuthenticationProvider backendAdminUsernamePasswordAuthenticationProvider() {
-		return new BackendAdminUsernamePasswordAuthenticationProvider();
 	}
 
 	@Bean

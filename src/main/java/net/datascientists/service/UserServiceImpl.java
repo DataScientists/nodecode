@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
         return dao.findById(id);
     }
  
-    public User findBySso(String userName) {
+    public User findByUserName(String userName) {
         return dao.findByUserName(userName);
     }
 
