@@ -12,13 +12,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.google.common.base.Optional;
 
-public class DomainUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
+public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
     private ExternalServiceAuthenticator externalServiceAuthenticator;
     private TokenManager tokenManager;
 
     
-    public DomainUsernamePasswordAuthenticationProvider(ExternalServiceAuthenticator externalServiceAuthenticator,
+    public UsernamePasswordAuthenticationProvider(ExternalServiceAuthenticator externalServiceAuthenticator,
     		TokenManager tokenManager) {
         this.externalServiceAuthenticator = externalServiceAuthenticator;
         this.tokenManager = tokenManager;

@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import net.datascientists.filter.AuthenticationFilter;
 import net.datascientists.service.security.DaoServiceAuthenticator;
-import net.datascientists.service.security.DomainUsernamePasswordAuthenticationProvider;
+import net.datascientists.service.security.UsernamePasswordAuthenticationProvider;
 import net.datascientists.service.security.ExternalServiceAuthenticator;
 import net.datascientists.service.security.TokenAuthenticationProvider;
 import net.datascientists.service.security.TokenManager;
@@ -81,11 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.authenticationProvider(
-				domainUsernamePasswordAuthenticationProvider())
-				.authenticationProvider(tokenAuthenticationProvider());
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		AuthenticationProvider upAuthProv = usernamePasswordAuthenticationProvider();
+		AuthenticationManagerBuilder builder = auth.authenticationProvider(upAuthProv);	
+		AuthenticationProvider token = tokenAuthenticationProvider();
+		builder.authenticationProvider(token);
 	}
 
 	private String[] actuatorEndpoints() {
@@ -103,8 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 	@Bean
-	public AuthenticationProvider domainUsernamePasswordAuthenticationProvider() {
-		return new DomainUsernamePasswordAuthenticationProvider(getExternalServiceAuthenticator(), tokenManager());
+	public AuthenticationProvider usernamePasswordAuthenticationProvider() {
+		ExternalServiceAuthenticator xsa = getExternalServiceAuthenticator();
+		TokenManager tm = tokenManager();
+		UsernamePasswordAuthenticationProvider upAuthProvider = new UsernamePasswordAuthenticationProvider(xsa, tm);
+		return upAuthProvider;
 	}
 
 	@Bean
