@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import net.datascientists.entity.User;
+import net.datascientists.mapper.base.BaseMapper;
 import net.datascientists.vo.UserVO;
 
 @Component

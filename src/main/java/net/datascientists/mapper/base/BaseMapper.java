@@ -1,4 +1,4 @@
-package net.datascientists.mapper;
+package net.datascientists.mapper.base;
 
 import java.util.List;
 

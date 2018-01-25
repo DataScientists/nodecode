@@ -10,25 +10,29 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
-import net.datascientists.service.UserService;
+import net.datascientists.rest.base.BaseRestController;
+import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.UserVO;
 
 @Path("/admin")
-public class AdminRestController implements BaseRestController<UserVO>{
+public class UserRestController implements BaseRestController<UserVO>{
 
 	@Autowired
-	private UserService service;
+	@Qualifier("NoteService")
+	private BaseService<UserVO> service;
 	
+	@SuppressWarnings("unchecked")
 	@GET
-    @Path(value = "/getUserRoles")
+    @Path(value = "/list")
     @Produces(value = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-    public Response list() {
+    public Response list(){
     	List<UserVO> list = new ArrayList<UserVO>();
 		try{
-			list = service.list();
+			list = (List<UserVO>) service.list();
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
@@ -37,8 +41,7 @@ public class AdminRestController implements BaseRestController<UserVO>{
     }
 
     @Override
-    public Response listDeleted()
-    {
+    public Response listDeleted(){
         // TODO Auto-generated method stub
         return null;
     }
@@ -51,29 +54,19 @@ public class AdminRestController implements BaseRestController<UserVO>{
     }
 
     @Override
-    public Response save(UserVO json)
-    {
+    public Response save(UserVO json){
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Response update(UserVO json)
-    {
+    public Response deleteSoft(UserVO json){
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Response deleteSoft(UserVO json)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Response deleteHard(UserVO json)
-    {
+    public Response deleteHard(UserVO json){
         // TODO Auto-generated method stub
         return null;
     }

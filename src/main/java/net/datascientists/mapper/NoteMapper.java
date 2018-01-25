@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import net.datascientists.entity.Note;
+import net.datascientists.mapper.base.BaseMapper;
 import net.datascientists.vo.NoteVO;
 
 @Component

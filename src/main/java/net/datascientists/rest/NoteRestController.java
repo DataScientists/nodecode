@@ -1,61 +1,57 @@
 package net.datascientists.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-
-import net.datascientists.service.NoteService;
-import net.datascientists.utilities.CommonUtil;
-import net.datascientists.vo.NoteVO;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+
+import net.datascientists.rest.base.BaseRestController;
+import net.datascientists.service.base.BaseService;
+import net.datascientists.vo.NoteVO;
 
 @Path("/note")
 public class NoteRestController implements BaseRestController<NoteVO>{
 
 	@Autowired
-	private NoteService service;
+	@Qualifier("NoteService")
+	private BaseService<NoteVO> service;
 
+	@SuppressWarnings("unchecked")
 	@GET
-	@Path(value="/getlist")
+	@Path(value="/list")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
 	@Override
 	public Response list() {
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		try{
-			list = service.list();
+			list = (List<NoteVO>) service.list();
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
 		}
 		return Response.ok(list).build();
 	}
-
-    @GET
-    @Path(value="/getlistbyinterview")
-    @Produces(value=MediaType.APPLICATION_JSON_VALUE)
-    public Response getListByInterview(@QueryParam("interviewId") Long interviewId) {
-        List<NoteVO> list = new ArrayList<NoteVO>();
-        try{
-            list = service.getListByInterview(interviewId);
-        }catch(Throwable e){
-            e.printStackTrace();
-            return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
-        }
-        return Response.ok(list).build();
-    }
-
+	
+	@SuppressWarnings("unchecked")
 	@GET
-	@Path(value="/get")
+	@Path(value="/findById")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
 	@Override
 	public Response findById(@QueryParam("id") Long id) {
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		try{
-			list = service.findById(id);
+			list = (List<NoteVO>) service.findById(id);
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
@@ -63,7 +59,7 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 		return Response.ok(list).build();
 	}
 
-	@Path(value="/create")
+	@Path(value="/save")
 	@POST
     @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
     @Produces(value=MediaType.APPLICATION_JSON_VALUE)
@@ -78,22 +74,7 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 		return Response.ok().build();
 	}
 
-	@Path(value="/update")
-	@POST
-    @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
-    @Produces(value=MediaType.APPLICATION_JSON_VALUE)
-	@Override
-	public Response update(NoteVO json) {
-		try{
-			service.update(json);
-		}catch(Throwable e){
-			e.printStackTrace();
-			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
-		}
-		return Response.ok().build();
-	}
-
-	@Path(value="/delete")
+	@Path(value="/deleteSoft")
 	@POST
 	@Override
 	public Response deleteSoft(NoteVO json) {

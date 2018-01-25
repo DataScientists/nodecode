@@ -2,17 +2,69 @@ package net.datascientists.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import net.datascientists.dao.UserDao;
 import net.datascientists.entity.User;
+import net.datascientists.mapper.UserMapper;
+import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.UserVO;
 
-public interface UserService extends BaseService<User>{
+@Service("userService")
+@Transactional
+public class UserService implements BaseService<User>{
 
-	User save(User user);
-    
-    User findById(Long id);
+	@Autowired
+    private UserDao dao;
+	@Autowired
+	private UserMapper mapper;
      
-    User findByUserName(String sso);
-    
-    List<UserVO> list();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+ 
+    @Override
+    public User save(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        dao.save(user);
+        return user;
+    }
+     
+    @Override
+    public User findById(Long id) {
+        return dao.findById(id);
+    }
+
+    public User findByUserName(String userName) {
+        return dao.findByUserName(userName);
+    }
+
+	@Override
+	public List<UserVO> list() {
+		return mapper.convertToVOList(dao.list());
+	}
+
+    @Override
+    public void deleteSoft(User entity)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deleteHard(User entity)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public List<? extends Object> listDeleted()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 	
 }

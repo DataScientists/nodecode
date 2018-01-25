@@ -1,11 +1,10 @@
-package net.datascientists.service;
+package net.datascientists.service.base;
 
 import java.util.List;
 
 public interface BaseService<T> {
 
     public Object save(T entity);
-    public Object update(T entity);
     public void deleteSoft(T entity);
     public void deleteHard(T entity);
     public Object findById(Long id);

@@ -9,8 +9,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.AuditLog;
-import net.datascientists.entity.Node;
 
 @Repository
 public class AuditDao implements BaseDao<AuditLog> {
@@ -23,46 +23,30 @@ public class AuditDao implements BaseDao<AuditLog> {
 		sessionFactory.getCurrentSession().saveOrUpdate(auditLog);
 		return auditLog;
 	}
-
     @Override
-    public AuditLog update(AuditLog auditLog)
-    {
-        sessionFactory.getCurrentSession().update(auditLog);
-        return auditLog;
-    }
-
-    @Override
-    public void deleteSoft(AuditLog auditLog)
-    {
+    public void deleteSoft(AuditLog auditLog){
         auditLog.setDeleted(1);
         save(auditLog);
     }
-
     @Override
-    public void deleteHard(AuditLog auditLog)
-    {
+    public void deleteHard(AuditLog auditLog){
         sessionFactory.getCurrentSession().delete(auditLog);
     }
-
     @Override
-    public AuditLog findById(Long id)
-    {
+    public AuditLog findById(Long id){
         AuditLog auditLog = (AuditLog)sessionFactory.getCurrentSession().get(AuditLog.class, id);
         return auditLog;
-    }
-
-    @Override
-    public List<AuditLog> list()
-    {
+    }  
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<AuditLog> list(){
         final Session session = sessionFactory.getCurrentSession();
         final Criteria crit = session.createCriteria(AuditLog.class);
         crit.add(Restrictions.eq("deleted", 0));
         return crit.list();
     }
-
     @Override
-    public List<AuditLog> listDeleted()
-    {
+    public List<AuditLog> listDeleted(){
         // TODO Auto-generated method stub
         return null;
     }
