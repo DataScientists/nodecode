@@ -52,16 +52,16 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		if(userObj == null ){
 			return null;
 		}
-		AuthenticatedExternalWebService authenticatedExternalWebService = new 
-				AuthenticatedExternalWebService(new User(), null,
+		AuthenticationWithToken authenticatedWithToken = new 
+		    AuthenticationWithToken(new User(), null,
 						getGrantedAuthorities(userObj));
 		TokenResponseVO tokenResponse = new TokenResponseVO();
 		tokenResponse.setToken(tokenManager.createTokenForUser(user,
-				authenticatedExternalWebService.getAuthorities()));
-		authenticatedExternalWebService.setToken(tokenResponse);
-		authenticatedExternalWebService.setAuthenticated(true);
-		SecurityContextHolder.getContext().setAuthentication(authenticatedExternalWebService);
-		return authenticatedExternalWebService;
+				authenticatedWithToken.getAuthorities()));
+		authenticatedWithToken.setToken(tokenResponse);
+		authenticatedWithToken.setAuthenticated(true);
+		SecurityContextHolder.getContext().setAuthentication(authenticatedWithToken);
+		return authenticatedWithToken;
 	}
 	
 	private void validateToken(String token){

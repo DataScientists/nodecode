@@ -24,11 +24,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import net.datascientists.filter.AuthenticationFilter;
-import net.datascientists.service.security.DaoServiceAuthenticator;
-import net.datascientists.service.security.UsernamePasswordAuthenticationProvider;
-import net.datascientists.service.security.ExternalServiceAuthenticator;
 import net.datascientists.service.security.TokenAuthenticationProvider;
 import net.datascientists.service.security.TokenManager;
+import net.datascientists.service.security.UsernamePasswordAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -98,16 +96,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
      
 	@Bean
-	public ExternalServiceAuthenticator getExternalServiceAuthenticator() {
-		return new DaoServiceAuthenticator();
-	}
-
-	@Bean
 	public AuthenticationProvider usernamePasswordAuthenticationProvider() {
-		ExternalServiceAuthenticator xsa = getExternalServiceAuthenticator();
-		TokenManager tm = tokenManager();
-		UsernamePasswordAuthenticationProvider upAuthProvider = new UsernamePasswordAuthenticationProvider(xsa, tm);
-		return upAuthProvider;
+		return new UsernamePasswordAuthenticationProvider();
 	}
 
 	@Bean
