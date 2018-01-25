@@ -1,4 +1,4 @@
-package net.datascientist.constants;
+package net.datascientists.constants;
 
 public enum UserState {
 	 

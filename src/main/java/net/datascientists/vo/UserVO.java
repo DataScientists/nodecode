@@ -3,7 +3,7 @@ package net.datascientists.vo;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.datascientist.constants.UserState;
+import net.datascientists.constants.UserState;
 
 public class UserVO {
 

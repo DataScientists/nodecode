@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import net.datascientist.constants.UserState;
+import net.datascientists.constants.UserState;
 
 @Entity
 public class User {

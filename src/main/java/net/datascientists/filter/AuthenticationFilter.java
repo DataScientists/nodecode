@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 
-import net.datascientist.constants.WSConstants;
+import net.datascientists.constants.WSConstants;
 import net.datascientists.vo.TokenResponseVO;
 
 public class AuthenticationFilter extends GenericFilterBean {
