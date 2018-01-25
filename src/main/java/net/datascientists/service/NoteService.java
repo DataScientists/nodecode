@@ -1,25 +1,27 @@
 package net.datascientists.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.datascientists.dao.NoteDao;
+import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.Note;
 import net.datascientists.mapper.NoteMapper;
 import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.NoteVO;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-@Service
+@Service("NoteService")
 @Transactional
 public class NoteService implements BaseService<NoteVO>{
 
 	@Autowired
-	private NoteDao dao;
+	@Qualifier("NoteDao")
+	private BaseDao<Note> dao;
 	
 	@Autowired
 	private NoteMapper mapper;
@@ -27,14 +29,14 @@ public class NoteService implements BaseService<NoteVO>{
 	@Override
 	public List<NoteVO> list() {
 		List<NoteVO> retValue = new ArrayList<NoteVO>();
-		List <Note> notes = dao.list();
+        List <Note> notes = (List<Note>) dao.list();
 		retValue = mapper.convertToVOList(notes);
 		return retValue;
 	}
 
 	@Override
-	public List<NoteVO> findById(Long id) {
-		Note note = dao.findById(id);
+	public List<NoteVO> find(String searchName, Object searchVal) {
+		Note note = (Note) dao.find(searchName,searchVal);
 		NoteVO noteVO = mapper.convertToVO(note);
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		list.add(noteVO);
@@ -43,7 +45,7 @@ public class NoteService implements BaseService<NoteVO>{
 
 	@Override
 	public NoteVO save(NoteVO o) {
-		Note noteEntity = dao.save(mapper.convertToEntity(o));
+		Note noteEntity = (Note) dao.save(mapper.convertToEntity(o));
 		return mapper.convertToVO(noteEntity);
 	}
 
@@ -59,7 +61,7 @@ public class NoteService implements BaseService<NoteVO>{
     }
 
     @Override
-    public List<? extends Object> listDeleted()
+    public List<NoteVO> listDeleted()
     {
         // TODO Auto-generated method stub
         return null;

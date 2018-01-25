@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.AuditLog;
 
-@Repository
+@Repository("AuditDao")
 public class AuditDao implements BaseDao<AuditLog> {
 
 	@Autowired
@@ -32,11 +32,17 @@ public class AuditDao implements BaseDao<AuditLog> {
     public void deleteHard(AuditLog auditLog){
         sessionFactory.getCurrentSession().delete(auditLog);
     }
+    
+    @SuppressWarnings("unchecked")
     @Override
-    public AuditLog findById(Long id){
-        AuditLog auditLog = (AuditLog)sessionFactory.getCurrentSession().get(AuditLog.class, id);
-        return auditLog;
-    }  
+    public List<AuditLog> find(String searchName, Object searchVal)
+    {
+        final Session session = sessionFactory.getCurrentSession();
+        final Criteria crit = session.createCriteria(AuditLog.class);
+        crit.add(Restrictions.eq(searchName, searchVal));
+        return crit.list();
+    }
+    
     @SuppressWarnings("unchecked")
 	@Override
     public List<AuditLog> list(){

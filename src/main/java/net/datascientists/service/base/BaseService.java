@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface BaseService<T> {
 
-    public Object save(T entity);
+    public T save(T entity);
     public void deleteSoft(T entity);
     public void deleteHard(T entity);
-    public Object findById(Long id);
-    public List<? extends Object> list();
-    public List<? extends Object> listDeleted();
+    public List<T> find(String searchName, Object searchVal);
+    public List<T> list();
+    public List<T> listDeleted();
 	
 }

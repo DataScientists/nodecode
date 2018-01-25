@@ -6,13 +6,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.Role;
 
-@Repository
+@Repository("RoleDao")
 public class RoleDao implements BaseDao<Role>{
 
 	@Autowired
@@ -27,26 +28,23 @@ public class RoleDao implements BaseDao<Role>{
         return (List<Role>)crit.list();
     }
 	
-	@Override
-    public Role findById(Long id) {
+	@SuppressWarnings("unchecked")
+    @Override
+    public List<Role> find(String searchName, Object searchVal)
+    {
         final Session session = sessionFactory.getCurrentSession();
-        return (Role)session.get(Role.class,id);
-    }    
-
-	
-	public Role findByType(String type) {
-		// TODO Auto-generated method stub
-        return null;
+        final Criteria crit = session.createCriteria(Role.class);
+        crit.add(Restrictions.eq(searchName, searchVal));
+        return crit.list();
     }
 
     @Override
-    public Object save(Role entity)
+    public Role save(Role entity)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-   
     @Override
     public void deleteSoft(Role entity)
     {
@@ -62,9 +60,10 @@ public class RoleDao implements BaseDao<Role>{
     }
 
     @Override
-    public List<? extends Object> listDeleted()
+    public List<Role> listDeleted()
     {
         // TODO Auto-generated method stub
         return null;
-    }	
+    }
+
 }

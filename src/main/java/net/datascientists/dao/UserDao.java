@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.datascientists.dao.base.BaseDao;
-import net.datascientists.entity.AuditLog;
-import net.datascientists.entity.Note;
+import net.datascientists.entity.Role;
 import net.datascientists.entity.User;
 
-@Repository
+@Repository("UserDao")
 public class UserDao implements BaseDao<User> {
 
 	@Autowired
@@ -26,11 +25,17 @@ public class UserDao implements BaseDao<User> {
 		session.saveOrUpdate(user);
 		return user;
 	}	
-	@Override
-	public User findById(Long id) {
-		final Session session = sessionFactory.getCurrentSession();
-		return (User)session.get(User.class, id);
-	}		
+	
+	@SuppressWarnings("unchecked")
+    @Override
+    public List<User> find(String searchName, Object searchVal)
+    {
+        final Session session = sessionFactory.getCurrentSession();
+        final Criteria crit = session.createCriteria(User.class);
+        crit.add(Restrictions.eq(searchName, searchVal));
+        return crit.list();
+    }	
+	
 	public User findByUserName(String userName) {
 		// TODO Auto-generated method stub
 		User retValue = null;

@@ -3,25 +3,23 @@ package net.datascientists.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.datascientists.dao.UserDao;
+import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.User;
-import net.datascientists.mapper.UserMapper;
 import net.datascientists.service.base.BaseService;
-import net.datascientists.vo.UserVO;
 
-@Service("userService")
+@Service("UserService")
 @Transactional
 public class UserService implements BaseService<User>{
 
-	@Autowired
-    private UserDao dao;
-	@Autowired
-	private UserMapper mapper;
-     
+    @Autowired
+    @Qualifier("UserDao")
+    private BaseDao<User> dao;
+	
     @Autowired
     private PasswordEncoder passwordEncoder;
  
@@ -33,17 +31,13 @@ public class UserService implements BaseService<User>{
     }
      
     @Override
-    public User findById(Long id) {
-        return dao.findById(id);
-    }
-
-    public User findByUserName(String userName) {
-        return dao.findByUserName(userName);
+    public List<User> find(String searchName, Object searchVal) {
+        return dao.find(searchName,searchVal);
     }
 
 	@Override
-	public List<UserVO> list() {
-		return mapper.convertToVOList(dao.list());
+	public List<User> list() {
+		return dao.list();
 	}
 
     @Override
@@ -61,7 +55,7 @@ public class UserService implements BaseService<User>{
     }
 
     @Override
-    public List<? extends Object> listDeleted()
+    public List<User> listDeleted()
     {
         // TODO Auto-generated method stub
         return null;

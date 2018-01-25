@@ -21,10 +21,9 @@ import net.datascientists.vo.UserVO;
 public class UserRestController implements BaseRestController<UserVO>{
 
 	@Autowired
-	@Qualifier("NoteService")
+	@Qualifier("UserService")
 	private BaseService<UserVO> service;
 	
-	@SuppressWarnings("unchecked")
 	@GET
     @Path(value = "/list")
     @Produces(value = MediaType.APPLICATION_JSON_VALUE)

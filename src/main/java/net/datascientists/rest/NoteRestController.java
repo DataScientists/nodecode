@@ -27,7 +27,6 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@Qualifier("NoteService")
 	private BaseService<NoteVO> service;
 
-	@SuppressWarnings("unchecked")
 	@GET
 	@Path(value="/list")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +42,6 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 		return Response.ok(list).build();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GET
 	@Path(value="/findById")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +49,7 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	public Response findById(@QueryParam("id") Long id) {
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		try{
-			list = (List<NoteVO>) service.findById(id);
+			list = service.find("id",id);
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();

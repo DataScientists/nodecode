@@ -8,7 +8,7 @@
 		var adminEndpoint = apiUrl + 'admin';
 
 		var getUserRoles = function() {
-			return $http.get(adminEndpoint + '/getUserRoles', {
+			return $http.get(adminEndpoint + '/list', {
 				cache : false
 			}).then(function(response) {
 				var data = response.data;

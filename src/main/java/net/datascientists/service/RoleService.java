@@ -3,38 +3,34 @@ package net.datascientists.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.datascientists.dao.RoleDao;
+import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.Role;
 import net.datascientists.service.base.BaseService;
 
 @Transactional
-@Service
+@Service("RoleService")
 public class RoleService implements BaseService<Role> {
 
     @Autowired
-    private RoleDao dao;
-
-
+    @Qualifier("RoleDao")
+    private BaseDao<Role> dao;
+    
     @Override
     public List<Role> list(){
-        return dao.list();
-    }
-
-    public Role findByType(String type){
-        return dao.findByType(type);
-    }
-
-
-    @Override
-    public Role findById(Long id){
-        return dao.findById(id);
+        return (List<Role>) dao.list();
     }
 
     @Override
-    public Object save(Role entity){
+    public List<Role> find(String searchName, Object searchVal){
+        return dao.find(searchName,searchVal);
+    }
+
+    @Override
+    public Role save(Role entity){
         // TODO Auto-generated method stub
         return null;
     }
@@ -52,7 +48,7 @@ public class RoleService implements BaseService<Role> {
     }
 
     @Override
-    public List<? extends Object> listDeleted(){
+    public List<Role> listDeleted(){
         // TODO Auto-generated method stub
         return null;
     }

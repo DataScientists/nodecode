@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -19,9 +20,9 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 import com.google.common.base.Optional;
 
-import net.datascientists.entity.User;
 import net.datascientists.entity.Role;
-import net.datascientists.service.UserService;
+import net.datascientists.entity.User;
+import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.TokenResponseVO;
 
 public class TokenAuthenticationProvider implements AuthenticationProvider {
@@ -29,7 +30,8 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 	private TokenManager tokenManager;
 	
 	@Autowired
-	private UserService userService;
+    @Qualifier("UserService")
+    private BaseService<User> userService;
 
 	public TokenAuthenticationProvider(TokenManager tokenManager) {
 		this.tokenManager = tokenManager;
@@ -45,8 +47,9 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		}
 		validateToken(token.get());
 		String user = tokenManager.parseUsernameFromToken(token.get());
-		User userObj = userService.findByUserName(user);
-		if(userObj == null){
+		List<User> list = userService.find("userName",user);
+		User userObj = list != null && !list.isEmpty()?list.get(0):null;
+		if(userObj == null ){
 			return null;
 		}
 		AuthenticatedExternalWebService authenticatedExternalWebService = new 

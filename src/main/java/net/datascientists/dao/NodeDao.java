@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.Node;
 
-@Repository
+@Repository("NodeDao")
 public class NodeDao implements BaseDao<Node>
 {
 
@@ -33,11 +33,18 @@ public class NodeDao implements BaseDao<Node>
     public void deleteHard(Node node){
         sessionFactory.getCurrentSession().delete(node);
     }
+    
+    @SuppressWarnings("unchecked")
     @Override
-    public Node findById(Long id){
-        Node retValue = (Node) sessionFactory.getCurrentSession().get(Node.class, id);
-        return retValue;
+    public List<Node> find(String searchName, Object searchVal)
+    {
+        final Session session = sessionFactory.getCurrentSession();
+        final Criteria crit = session.createCriteria(Node.class);
+        crit.add(Restrictions.eq(searchName, searchVal));
+        return crit.list();
     }
+    
+    @SuppressWarnings("unchecked")
     @Override
     public List<Node> list(){
         final Session session = sessionFactory.getCurrentSession();
@@ -46,6 +53,7 @@ public class NodeDao implements BaseDao<Node>
         return crit.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Node> listDeleted(){
         final Session session = sessionFactory.getCurrentSession();
