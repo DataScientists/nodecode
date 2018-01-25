@@ -1,8 +1,9 @@
-package net.datascientists.service;
+package net.datascientists.dao;
 
 import java.util.List;
 
-public interface BaseService<T> {
+public interface BaseDao<T>
+{
 
     public Object save(T entity);
     public Object update(T entity);
@@ -11,5 +12,5 @@ public interface BaseService<T> {
     public Object findById(Long id);
     public List<? extends Object> list();
     public List<? extends Object> listDeleted();
-	
+
 }

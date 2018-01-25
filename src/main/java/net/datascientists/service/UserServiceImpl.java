@@ -24,23 +24,54 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
  
-     
-    public void save(User user){
+    @Override
+    public User save(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         dao.save(user);
+        return user;
     }
      
-    public User findById(int id) {
+    @Override
+    public User findById(Long id) {
         return dao.findById(id);
     }
  
+    @Override
     public User findByUserName(String userName) {
         return dao.findByUserName(userName);
     }
 
 	@Override
-	public List<UserVO> getUserRoles() {
-		return mapper.convertToUserVOList(dao.list());
+	public List<UserVO> list() {
+		return mapper.convertToVOList(dao.list());
 	}
+
+    @Override
+    public Object update(User entity)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void deleteSoft(User entity)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deleteHard(User entity)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public List<? extends Object> listDeleted()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 	
 }

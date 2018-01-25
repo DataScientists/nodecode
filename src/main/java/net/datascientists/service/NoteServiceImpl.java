@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class NoteServiceImpl {
+public class NoteServiceImpl implements NoteService{
 
 	@Autowired
 	private NoteDao dao;
@@ -23,15 +23,15 @@ public class NoteServiceImpl {
 	@Autowired
 	private NoteMapper mapper;
 
-	
-	public List<NoteVO> listAll() {
+	@Override
+	public List<NoteVO> list() {
 		List<NoteVO> retValue = new ArrayList<NoteVO>();
 		List <Note> notes = dao.list();
 		retValue = mapper.convertToVOList(notes);
 		return retValue;
 	}
 
-	
+	@Override
 	public List<NoteVO> findById(Long id) {
 		Note note = dao.findById(id);
 		NoteVO noteVO = mapper.convertToVO(note);
@@ -40,20 +40,41 @@ public class NoteServiceImpl {
 		return list;
 	}
 
-	
-	public NoteVO create(NoteVO o) {
+	@Override
+	public NoteVO save(NoteVO o) {
 		Note noteEntity = dao.save(mapper.convertToEntity(o));
 		return mapper.convertToVO(noteEntity);
 	}
 
-	
-	public void update(NoteVO vo) {
+	@Override
+	public NoteVO update(NoteVO vo) {
 		Note note = mapper.convertToEntity(vo);
-		dao.save(note);
+		dao.update(note);
+		return vo;
 	}
 
-	
-	public void delete(NoteVO vo) {
+	@Override
+	public void deleteSoft(NoteVO vo) {
 		dao.deleteSoft(mapper.convertToEntity(vo));
 	}
+
+    @Override
+    public void deleteHard(NoteVO entity)
+    {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public List<? extends Object> listDeleted()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<NoteVO> getListByInterview(long interviewId)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

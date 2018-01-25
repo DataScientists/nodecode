@@ -5,14 +5,14 @@ import java.util.List;
 import net.datascientists.entity.User;
 import net.datascientists.vo.UserVO;
 
-public interface UserService {
+public interface UserService extends BaseService<User>{
 
-	void save(User user);
+	User save(User user);
     
-    User findById(int id);
+    User findById(Long id);
      
     User findByUserName(String sso);
     
-    List<UserVO> getUserRoles();
+    List<UserVO> list();
 	
 }

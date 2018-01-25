@@ -16,7 +16,7 @@ import net.datascientists.service.UserService;
 import net.datascientists.vo.UserVO;
 
 @Path("/admin")
-public class AdminRestController {
+public class AdminRestController implements BaseRestController<UserVO>{
 
 	@Autowired
 	private UserService service;
@@ -24,15 +24,58 @@ public class AdminRestController {
 	@GET
     @Path(value = "/getUserRoles")
     @Produces(value = MediaType.APPLICATION_JSON_VALUE)
-    public Response getUserRoles() {
+	@Override
+    public Response list() {
     	List<UserVO> list = new ArrayList<UserVO>();
 		try{
-			list = service.getUserRoles();
+			list = service.list();
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
 		}
 		return Response.ok(list).build();
+    }
+
+    @Override
+    public Response listDeleted()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response findById(Long id)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response save(UserVO json)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response update(UserVO json)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response deleteSoft(UserVO json)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response deleteHard(UserVO json)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 	
 }

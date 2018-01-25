@@ -4,12 +4,12 @@ import java.util.List;
 
 import net.datascientists.entity.Role;
 
-public interface UserRoleService {
+public interface UserRoleService extends BaseService<Role> {
 
-	List<Role> findAll();
+	List<Role> list();
     
 	Role findByType(String type);
      
-	Role findById(int id);
+	Role findById(Long id);
 	
 }

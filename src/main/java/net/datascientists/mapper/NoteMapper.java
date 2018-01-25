@@ -9,8 +9,9 @@ import net.datascientists.entity.Note;
 import net.datascientists.vo.NoteVO;
 
 @Component
-public class NoteMapper {
+public class NoteMapper implements BaseMapper<NoteVO,Note>{
  
+    @Override
     public NoteVO convertToVO(Note note) {
         if (note == null) {
             return null;
@@ -22,6 +23,8 @@ public class NoteMapper {
         		
         return noteVO;
     }
+    
+    @Override
 	public Note convertToEntity(NoteVO noteVO) {
 		if(noteVO == null){
 			return null;
@@ -33,6 +36,8 @@ public class NoteMapper {
         
 		return note;
 	}	
+    
+    @Override
 	public List<Note> convertToEntityList(List<NoteVO> noteVOs) {
 		if (noteVOs == null) {
             return null;
@@ -43,6 +48,8 @@ public class NoteMapper {
         }
         return list;
 	}	
+    
+    @Override
 	public List<NoteVO> convertToVOList(List<Note> entityList) {
 		if (entityList == null) {
             return null;

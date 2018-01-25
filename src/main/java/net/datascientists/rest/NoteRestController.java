@@ -22,10 +22,11 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@GET
 	@Path(value="/getlist")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
-	public Response listAll() {
+	@Override
+	public Response list() {
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		try{
-			list = service.listAll();
+			list = service.list();
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
@@ -50,7 +51,8 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@GET
 	@Path(value="/get")
 	@Produces(value=MediaType.APPLICATION_JSON_VALUE)
-	public Response get(@QueryParam("id") Long id) {
+	@Override
+	public Response findById(@QueryParam("id") Long id) {
 		List<NoteVO> list = new ArrayList<NoteVO>();
 		try{
 			list = service.findById(id);
@@ -65,9 +67,10 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@POST
     @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
     @Produces(value=MediaType.APPLICATION_JSON_VALUE)
-	public Response create(NoteVO json) {
+	@Override
+	public Response save(NoteVO json) {
 		try{
-			service.create(json);
+			service.save(json);
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
@@ -79,6 +82,7 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 	@POST
     @Consumes(value=MediaType.APPLICATION_JSON_VALUE)
     @Produces(value=MediaType.APPLICATION_JSON_VALUE)
+	@Override
 	public Response update(NoteVO json) {
 		try{
 			service.update(json);
@@ -91,15 +95,30 @@ public class NoteRestController implements BaseRestController<NoteVO>{
 
 	@Path(value="/delete")
 	@POST
-	public Response delete(NoteVO json) {
+	@Override
+	public Response deleteSoft(NoteVO json) {
 		try{
-			service.delete(json);
+			service.deleteSoft(json);
 		}catch(Throwable e){
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).type("text/plain").entity(e.getMessage()).build();
 		}
 		return Response.ok().build();
 	}
+
+    @Override
+    public Response listDeleted()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Response deleteHard(NoteVO json)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
 }
