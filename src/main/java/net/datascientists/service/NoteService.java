@@ -55,15 +55,17 @@ public class NoteService implements BaseService<NoteVO>{
 	}
 
     @Override
-    public void deleteHard(NoteVO entity)
+    public void deleteHard(NoteVO vo)
     {
-        // TODO Auto-generated method stub
+        dao.deleteHard(mapper.convertToEntity(vo));
     }
 
     @Override
     public List<NoteVO> listDeleted()
     {
-        // TODO Auto-generated method stub
-        return null;
+    	List<NoteVO> retValue = new ArrayList<NoteVO>();
+        List <Note> Notes = (List<Note>) dao.listDeleted();
+		retValue = mapper.convertToVOList(Notes);
+		return retValue;
     }   
 }

@@ -1,5 +1,6 @@
 package net.datascientists.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,58 +8,71 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import net.datascientists.dao.base.BaseDao;
 import net.datascientists.entity.User;
+import net.datascientists.mapper.UserMapper;
 import net.datascientists.service.base.BaseService;
+import net.datascientists.vo.UserVO;
+
 
 @Service("UserService")
 @Transactional
-public class UserService implements BaseService<User>{
+public class UserService implements BaseService<UserVO>{
 
     @Autowired
     @Qualifier("UserDao")
     private BaseDao<User> dao;
 	
     @Autowired
+	private UserMapper mapper;
+    
+    @Autowired
     private PasswordEncoder passwordEncoder;
  
     @Override
-    public User save(User user){
+    public UserVO save(UserVO user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        dao.save(user);
-        return user;
+        User userEntity = (User) dao.save(mapper.convertToEntity(user));
+        return mapper.convertToVO(userEntity);
     }
      
     @Override
-    public List<User> find(String searchName, Object searchVal) {
-        return dao.find(searchName,searchVal);
+    public List<UserVO> find(String searchName, Object searchVal) {
+    	List<User> userList =  dao.find(searchName,searchVal);
+    	List<UserVO> userVOList = mapper.convertToVOList(userList);
+		
+		return userVOList;
     }
 
 	@Override
-	public List<User> list() {
-		return dao.list();
+	public List<UserVO> list() {
+		List<UserVO> retValue = new ArrayList<UserVO>();
+        List <User> Users = (List<User>) dao.list();
+		retValue = mapper.convertToVOList(Users);
+		return retValue;
 	}
 
     @Override
-    public void deleteSoft(User entity)
+    public void deleteSoft(UserVO vo)
     {
-        // TODO Auto-generated method stub
+    	dao.deleteSoft(mapper.convertToEntity(vo));
         
     }
 
     @Override
-    public void deleteHard(User entity)
+    public void deleteHard(UserVO user)
     {
-        // TODO Auto-generated method stub
+        dao.deleteHard(mapper.convertToEntity(user));
         
     }
 
     @Override
-    public List<User> listDeleted()
+    public List<UserVO> listDeleted()
     {
-        // TODO Auto-generated method stub
-        return null;
+    	List<UserVO> retValue = new ArrayList<UserVO>();
+        List <User> Users = (List<User>) dao.listDeleted();
+		retValue = mapper.convertToVOList(Users);
+		return retValue;
     }
 	
 }

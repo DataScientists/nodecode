@@ -1,10 +1,14 @@
 package net.datascientists.vo;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import net.datascientists.constants.UserState;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import net.datascientists.constants.UserState;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserVO {
 
 	private long id;
@@ -13,9 +17,10 @@ public class UserVO {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Integer deleted;
+	private Date lastUpdated;
 	private String state = UserState.ACTIVE.getState();
-	private Set<UserProfileVO> userProfiles = new HashSet<UserProfileVO>();
-
+	private List<RoleVO> Roles ;
 	public long getId() {
 		return id;
 	}
@@ -58,10 +63,22 @@ public class UserVO {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public Set<UserProfileVO> getUserProfiles() {
-		return userProfiles;
+	public List<RoleVO> getRoles() {
+		return Roles;
 	}
-	public void setUserProfiles(Set<UserProfileVO> userProfiles) {
-		this.userProfiles = userProfiles;
+	public void setRoles(List<RoleVO> Roles) {
+		this.Roles = Roles;
+	}
+	public Integer getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 }

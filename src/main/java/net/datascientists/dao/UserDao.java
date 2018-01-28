@@ -8,9 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import net.datascientists.dao.base.BaseDao;
-import net.datascientists.entity.Role;
 import net.datascientists.entity.User;
 
 @Repository("UserDao")
@@ -37,9 +35,7 @@ public class UserDao implements BaseDao<User> {
     }	
 	
 	public User findByUserName(String userName) {
-		// TODO Auto-generated method stub
 		User retValue = null;
-		//ArrayList<User> users = this.list();
 		for(User u: this.list()){
 			if(u.getUserName().equalsIgnoreCase(userName)){
 				retValue = u;
@@ -63,13 +59,14 @@ public class UserDao implements BaseDao<User> {
         return crit.list();
     }
     @Override
-    public void deleteSoft(User entity){
-        // TODO Auto-generated method stub
+    public void deleteSoft(User user){
+    	user.setDeleted(1);
+        sessionFactory.getCurrentSession().saveOrUpdate(user);
         
     }
     @Override
-    public void deleteHard(User entity){
-        // TODO Auto-generated method stub
+    public void deleteHard(User user){
+    	sessionFactory.getCurrentSession().delete(user);
         
     }
 }

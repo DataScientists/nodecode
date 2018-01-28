@@ -1,21 +1,44 @@
 <div ng-cloak>
+<button ng-click="vm.showAddUserDialog()" class="btn btn-default" aria-label="Left Align">
+			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> 
+			Add User
+		</button>
 	<div>
 		<table ng-table="vm.tableParams" ng-cloak
 		class="table table-bordered table-hover 
   table-condensed editable-table" show-filter="true">
 			<tr ng-repeat="user in $data">
-				<td title="'Username'" filter="{ ssoId: 'text'}" sortable="'ssoId'">
+				<td width="15%" title="'Username'" filter="{ userName: 'text'}" sortable="'userName'">
 					{{user.userName}}</td> 
-				<td title="'Firstname'" filter="{ firstName:'text'}" sortable="'firstName'">
-					{{user.firstName}}</td>
-				<td title="'Lastname'" filter="{ lastName:'text'}" sortable="'lastName'">
-					{{user.lastName}}</td>
-				<td title="'Email'" filter="{ email:'text'}" sortable="'email'">
+				<td width="15%" title="'Contact Name'" filter="{ contactName:'text'}" sortable="'contactName'">
+					{{user.contactName}}</td>
+				<td width="10%" title="'Email'" filter="{ email:'text'}" sortable="'email'">
 					{{user.email}}</td>
-				<td title="'State'" filter="{ state:'text'}" sortable="'state'">
+				<td width="10%" title="'State'" filter="{ state:'text'}" sortable="'state'">
 					{{user.state}}</td>
-				<td title="'Role'" filter="{ id:'text'}" sortable="'id'">
-					{{user.userProfiles}}
+				<td width="25%" title="'Roles'" filter="{ rolesStr:'text'}" sortable="'rolesStr'">
+					<!-- <md-select ng-model="roleDummyPlaceholder">
+					 
+						<md-option ng-repeat="role in user.roles"  selected="{{roles[0].name}}" >
+						{{role.name}} 
+						</md-option>
+					</md-select> -->
+					{{user.rolesStr}}
+				</td>
+				<td width="10%" >
+				<button type="button" class="btn btn-default" aria-label="Edit"
+						ng-click="vm.showEditUserDialog(user)">
+						 <md-tooltip md-direction="bottom">Edit User</md-tooltip>
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default"
+						aria-label="Change Password"
+						ng-click="vm.showChangePasswordDialog(user)">
+						<md-tooltip md-direction="bottom">Change Password</md-tooltip>
+						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+					</button>
+					
+				
 				</td>
 			</tr>
 		</table>

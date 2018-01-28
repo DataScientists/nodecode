@@ -17,13 +17,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-
 import com.google.common.base.Optional;
-
-import net.datascientists.entity.Role;
-import net.datascientists.entity.User;
 import net.datascientists.service.base.BaseService;
+import net.datascientists.vo.RoleVO;
 import net.datascientists.vo.TokenResponseVO;
+import net.datascientists.vo.UserVO;
 
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
@@ -31,7 +29,7 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
     @Qualifier("UserService")
-    private BaseService<User> userService;
+    private BaseService<UserVO> userService;
 
 	public TokenAuthenticationProvider(TokenManager tokenManager) {
 		this.tokenManager = tokenManager;
@@ -47,13 +45,13 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		}
 		validateToken(token.get());
 		String user = tokenManager.parseUsernameFromToken(token.get());
-		List<User> list = userService.find("userName",user);
-		User userObj = list != null && !list.isEmpty()?list.get(0):null;
+		List<UserVO> list = userService.find("userName",user);
+		UserVO userObj = list != null && !list.isEmpty()?list.get(0):null;
 		if(userObj == null ){
 			return null;
 		}
 		AuthenticationWithToken authenticatedWithToken = new 
-		    AuthenticationWithToken(new User(), null,
+		    AuthenticationWithToken(new UserVO(), null,
 						getGrantedAuthorities(userObj));
 		TokenResponseVO tokenResponse = new TokenResponseVO();
 		tokenResponse.setToken(tokenManager.createTokenForUser(user,
@@ -81,10 +79,10 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		 return authentication.equals(PreAuthenticatedAuthenticationToken.class);
 	}
 	
-	private List<GrantedAuthority> getGrantedAuthorities(User user){
+	private List<GrantedAuthority> getGrantedAuthorities(UserVO user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
          
-        for(Role userRole : user.getRoles()){
+        for(RoleVO userRole : user.getRoles()){
             authorities.add(new SimpleGrantedAuthority("ROLE_"+userRole.getName()));
         }
         return authorities;

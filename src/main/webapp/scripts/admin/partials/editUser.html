@@ -1,0 +1,85 @@
+<md-dialog aria-label="Edit User" style="margin:0 0 0 0;padding:0 0 0 0;"
+	ng-cloak> <!-- <pre>{{data | json}}</pre> -->
+	<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Edit User - {{existingUser.userName}}</h2> 
+		<span flex></span>
+		<md-button class="md-icon-button" ng-click="vm.cancel()"> <span
+			class="glyphicon glyphicon-remove" aria-hidden="true"></span> </md-button>
+	</div>
+	</md-toolbar>
+	<md-dialog-content style="width:510px;">
+	<div class="md-dialog-content">
+		<div layout="column" ng-cloak class="md-inline-form">
+			<md-content>
+			<form name="existingUserForm" class="navbar-form"
+				id="existingUserForm" ng-submit="vm.editUserBtn(existingUser)" novalidate>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Contact Firstname</label> 
+					<input required	maxlength="100" name="firstName" ng-model="existingUser.firstName" />
+					<div class="help-block" ng-messages="existingUserForm.firstName.$error" ng-if="existingUserForm.firstName.$touched">
+					        <p ng-message="required">firstname is required.</p>
+					</div>
+					 </md-input-container>
+					<div flex="5" hide-xs hide-sm>
+						<!-- Spacer //-->
+					</div>
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>Contact Lastname</label> 
+					<input required maxlength="100" name="lastName"	ng-model="existingUser.lastName" />
+					<div class="help-block" ng-messages="existingUserForm.lastName.$error" ng-if="existingUserForm.lastName.$touched">
+					        <p ng-message="required">lastname is required.</p>
+					</div>
+					</md-input-container>
+				</div>				
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>*Email</label> 
+					<input required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" name="email"
+						ng-model="existingUser.email" /> 
+					<div class="help-block" ng-messages="existingUserForm.email.$error" ng-if="existingUserForm.email.$touched">
+					        <p ng-message="required">email is required.</p>
+					        <p ng-message="pattern">Please enter valid email.</p>
+					        <!-- <p ng-message="emailExist">Email already registered.</p> -->
+					    </div>	
+					</md-input-container>
+					<div flex="5" hide-xs hide-sm>
+						<!-- Spacer //-->
+					</div>
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>*State</label> 
+					<md-select name="state" required ng-model="existingUser.state">
+					<md-option ng-repeat="state in vm.states" 
+					value="{{state.name}}">
+					{{state.name}} </md-option> </md-select>
+					<div class="help-block" ng-messages="existingUserForm.state.$error" ng-if="existingUserForm.state.$touched">
+					        <p ng-message="required">Please select state.</p>
+					        
+					    </div>
+					</md-input-container>
+				</div>
+				<div layout-gt-sm="row">
+					<md-input-container class="md-block" flex-gt-sm>
+					<label>*Role</label> <md-select required multiple ng-model="existingUser.roles" name="roles">
+					<md-option ng-repeat="role in vm.roleList" 
+					value="{{role}}">
+					{{role.name}} </md-option> </md-select>
+					<div class="help-block" ng-messages="existingUserForm.roles.$error" ng-if="existingUserForm.roles.$touched">
+					        <p ng-message="required">Please select role.</p>
+					        
+					    </div>
+					</md-input-container>
+					
+					
+				</div>
+				<md-dialog-actions layout="row">
+					<md-button ng-click="vm.cancel()" class="md-raised">Cancel</md-button>
+					<md-button ng-disabled="existingUserForm.$invalid" type="submit" ng-click="vm.editUserBtn(existingUser)" class="md-raised">Submit</md-button>
+				</md-dialog-actions>
+			</form>
+			</md-content>
+		</div>
+	</div>
+	</md-dialog-content>
+</md-dialog>

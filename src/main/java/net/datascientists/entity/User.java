@@ -1,5 +1,6 @@
 package net.datascientists.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private Integer deleted;
+	private Date lastUpdated;
     private String state = UserState.ACTIVE.getState();
     
     @ManyToMany(targetEntity=Role.class)
@@ -72,5 +75,17 @@ public class User {
 	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	public Integer getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 }

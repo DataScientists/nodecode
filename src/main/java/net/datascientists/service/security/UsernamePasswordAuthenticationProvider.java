@@ -15,20 +15,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.google.common.base.Optional;
-
-import net.datascientists.entity.Role;
-import net.datascientists.entity.User;
+import net.datascientists.mapper.UserMapper;
 import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.TokenResponseVO;
+import net.datascientists.vo.UserVO;
+import net.datascientists.vo.RoleVO;
 
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     @Qualifier("UserService")
-    private BaseService<User> userService;
+    private BaseService<UserVO> userService;
     
+    @Autowired
+    private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -58,15 +59,15 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
     
     private AuthenticationWithToken authenticateUser(String username, String password) {
         AuthenticationWithToken authenticatedWithToken = null;
-        List<User> list = userService.find("userName",username);
-        User user = list != null && !list.isEmpty()?list.get(0):null;
+        List<UserVO> list = userService.find("userName",username);
+        UserVO user = list != null && !list.isEmpty()?list.get(0):null;
         try {
             if(user!=null && !StringUtils.isEmpty(password)){
                 if(passwordEncoder.matches(password,user.getPassword())){
                     TokenResponseVO tokenResponse = new TokenResponseVO();
                     tokenResponse.getUserInfo().put("roles", getGrantedAuthorities(user));
                     tokenResponse.getUserInfo().put("userId", username);
-                    authenticatedWithToken = new AuthenticationWithToken(new User(), null,
+                    authenticatedWithToken = new AuthenticationWithToken(new UserVO(), null,
                         getGrantedAuthorities(user));
                     authenticatedWithToken.setToken(tokenResponse);
                 }else{
@@ -84,10 +85,10 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         return authenticatedWithToken;
     }
     
-    private List<GrantedAuthority> getGrantedAuthorities(User user){
+    private List<GrantedAuthority> getGrantedAuthorities(UserVO user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         
-        for(Role userRole : user.getRoles()){
+        for(RoleVO userRole : user.getRoles()){
             System.out.println("User log in with role : "+userRole.getName());
             authorities.add(new SimpleGrantedAuthority(userRole.getName()));
         }

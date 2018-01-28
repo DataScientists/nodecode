@@ -1,34 +1,25 @@
-package net.datascientists.entity;
+package net.datascientists.vo;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import net.datascientists.constants.UserState;
 
-@Entity
-public class Role {
-	@Id 
-	@GeneratedValue
-	private long id; 
-	
+public class RoleVO {
+
+	private long id;
 	private String name;
 	private String description;	
-	
 	private Integer deleted;
 	private Date lastUpdated;
-	
-	@ManyToMany(targetEntity=User.class, mappedBy="roles")
-    private List<User> users;
-	
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -53,5 +44,5 @@ public class Role {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-
+	
 }
