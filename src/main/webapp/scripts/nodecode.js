@@ -9,7 +9,6 @@ angular
     "ui.tree",
     "ngTable",
     "ngSanitize",
-    "ngCsv",
     "angular-confirm",
     "sticky",
     "ngToast",

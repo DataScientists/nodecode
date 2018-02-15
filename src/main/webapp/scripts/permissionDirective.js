@@ -10,10 +10,8 @@ angular.module('nodeCodeApp')
  
        link: function (scope, elem, attrs) {
             scope.$watch(Auth.isLoggedIn, function() {
-                if (Auth.userHasPermission(scope.permission)) {
-                    elem.show();
-                } else {
-                    elem.hide();
+            	if (!Auth.userHasPermission(scope.permission)) {
+                	$("#"+elem[0].id).hide();
                 }
             });                
        }
