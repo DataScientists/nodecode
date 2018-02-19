@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,6 +26,8 @@ import net.datascientists.vo.RoleVO;
 
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
+    private Logger errorLog = LogManager.getLogger("ERRORLOG");
+    
     @Autowired
     @Qualifier("UserService")
     private BaseService<UserVO> userService;
@@ -45,10 +49,12 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         Optional<String> password = (Optional<String>) authentication.getCredentials();
 
         if (!username.isPresent() || !password.isPresent()) {
+            errorLog.error("Invalid Domain User Credentials");
             throw new BadCredentialsException("Invalid Domain User Credentials");
         }
         AuthenticationWithToken resultOfAuthentication = authenticateUser(username.get(), password.get());
         if(resultOfAuthentication == null){
+            errorLog.error("Invalid Domain User Credentials");
         	throw new BadCredentialsException("Invalid Domain User Credentials");
         }
         resultOfAuthentication.getToken().setToken(tokenManager.createTokenForUser(username.get(),
