@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="4.0 r1823414">
+  <org.apache.jorphan.collections.HashTree>
+    <java.lang.String>threadGroup</java.lang.String>
+    <org.apache.jorphan.collections.HashTree>
+      <ThreadGroup>
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <intProp name="LoopController.loops">1</intProp>
+        </elementProp>
+      </ThreadGroup>
+      <org.apache.jorphan.collections.HashTree/>
+    </org.apache.jorphan.collections.HashTree>
+    <java.lang.String>httpSampler</java.lang.String>
+    <org.apache.jorphan.collections.HashTree>
+      <HTTPSamplerProxy>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="name" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">true</boolProp>
+              <stringProp name="Argument.name">name</stringProp>
+              <stringProp name="Argument.value">value</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">example.com</stringProp>
+        <intProp name="HTTPSampler.port">80</intProp>
+        <stringProp name="HTTPSampler.path">/</stringProp>
+        <stringProp name="HTTPSampler.method">GET</stringProp>
+        <elementProp name="HTTPSampler.header_manager" elementType="HeaderManager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="Accept" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+      </HTTPSamplerProxy>
+      <org.apache.jorphan.collections.HashTree/>
+    </org.apache.jorphan.collections.HashTree>
+    <java.lang.String>loopController</java.lang.String>
+    <org.apache.jorphan.collections.HashTree>
+      <LoopController>
+        <boolProp reference="../../../org.apache.jorphan.collections.HashTree/ThreadGroup/elementProp/boolProp"/>
+        <intProp reference="../../../org.apache.jorphan.collections.HashTree/ThreadGroup/elementProp/intProp"/>
+      </LoopController>
+      <org.apache.jorphan.collections.HashTree/>
+    </org.apache.jorphan.collections.HashTree>
+    <java.lang.String>testPlan</java.lang.String>
+    <org.apache.jorphan.collections.HashTree>
+      <TestPlan testname="Create JMeter Script From Java Code"/>
+      <org.apache.jorphan.collections.HashTree/>
+    </org.apache.jorphan.collections.HashTree>
+  </org.apache.jorphan.collections.HashTree>
+</jmeterTestPlan>
