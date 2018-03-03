@@ -1,29 +1,31 @@
 package net.datascientists.service;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.protocol.http.control.Header;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
-import org.apache.jmeter.save.SaveService;
-import org.apache.jmeter.testelement.TestPlan;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import net.datascientists.utilities.JMeterFactory;
+
+import static org.junit.Assert.*;
+
 public class JAXBTest
 {
-
-    private HashTree hashTree;
     
+    private  JMeterFactory.Builder builder;
+
     @Before
     public void setUp() throws FileNotFoundException, IOException {
+        builder= new JMeterFactory.Builder();
+        
         String jmeterHome = "C:\\Users\\lenovo\\Downloads\\apache-jmeter-3.3\\apache-jmeter-3.3"; 
         JMeterUtils.setJMeterHome(jmeterHome); 
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir() + "\\jmeter.properties"); 
@@ -57,16 +59,11 @@ public class JAXBTest
         threadGroup.setNumThreads(1);
         threadGroup.setRampUp(1);
         threadGroup.setSamplerController(loopController);
-
-        // Test Plan
-        TestPlan testPlan = new TestPlan("Create JMeter Script From Java Code");
         
-        hashTree = new HashTree();
-        // Construct Test Plan from previously initialized elements
-        hashTree.add("testPlan", testPlan);
-        hashTree.add("loopController", loopController);
-        hashTree.add("threadGroup", threadGroup);
-        hashTree.add("httpSampler", httpSampler);
+        builder.addHeader(headerManager);
+        builder.addController(loopController);
+        builder.addHttpSampler(httpSampler);
+        builder.addThreadGroup(threadGroup);
     }
  
     @After
@@ -74,9 +71,10 @@ public class JAXBTest
     }
  
     @Test
-    public void testSaveHashTree() throws FileNotFoundException, IOException {
-        SaveService.saveTree(hashTree, new FileOutputStream("test.xml"));
-        SaveService.saveTree(hashTree, System.out);
+    public void testSaveHashTree() {
+        String result = builder.build();
+        System.out.println(result);
+        assertTrue(!StringUtils.isEmpty(result));
     }
     
 }
