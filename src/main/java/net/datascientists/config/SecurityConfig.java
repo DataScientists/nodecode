@@ -24,6 +24,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import net.datascientists.filter.AuthenticationFilter;
+import net.datascientists.filter.JMXFilter;
 import net.datascientists.service.security.TokenAuthenticationProvider;
 import net.datascientists.service.security.TokenManager;
 import net.datascientists.service.security.UsernamePasswordAuthenticationProvider;
