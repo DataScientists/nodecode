@@ -1,6 +1,8 @@
 package net.datascientists.service.security;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,12 +19,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.util.UrlPathHelper;
+
 import com.google.common.base.Optional;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import net.datascientists.mapper.UserMapper;
 import net.datascientists.service.base.BaseService;
+import net.datascientists.vo.HeaderVO;
+import net.datascientists.vo.JMXLogVO;
+import net.datascientists.vo.RoleVO;
 import net.datascientists.vo.TokenResponseVO;
 import net.datascientists.vo.UserVO;
-import net.datascientists.vo.RoleVO;
 
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
@@ -38,6 +47,10 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenManager tokenManager;
+    @Autowired
+    @Qualifier("JMXService")
+    private BaseService<JMXLogVO> service;
+    private UrlPathHelper urlPathHelper = new UrlPathHelper(); 
     
     public UsernamePasswordAuthenticationProvider() {
     }
@@ -57,8 +70,22 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
             errorLog.error("Invalid Domain User Credentials");
         	throw new BadCredentialsException("Invalid Domain User Credentials");
         }
-        resultOfAuthentication.getToken().setToken(tokenManager.createTokenForUser(username.get(),
-        			(List<GrantedAuthority>)resultOfAuthentication.getToken().getUserInfo().get("roles")));
+        String tokenForUser = tokenManager.createTokenForUser(username.get(),
+            (List<GrantedAuthority>)resultOfAuthentication.getToken().getUserInfo().get("roles"));
+        resultOfAuthentication.getToken().setToken(tokenForUser);
+        JMXLogVO vo = new JMXLogVO();
+        vo.setFunction("/web/security/login");
+        vo.setDeleted(0);
+        List<HeaderVO> list = new ArrayList<>();
+        list.add(new HeaderVO("username",username.get()));
+        list.add(new HeaderVO("password",password.get()));
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<HeaderVO>>() {}.getType();
+        String headers = gson.toJson(list,listType);
+        vo.setHeader(headers);
+        vo.setSessionId(tokenForUser);
+        vo.setUserId(username.get());
+        service.save(vo);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         return resultOfAuthentication;
     }
