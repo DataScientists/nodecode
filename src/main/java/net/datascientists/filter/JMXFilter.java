@@ -66,6 +66,7 @@ public class JMXFilter extends GenericFilterBean
             vo.setUserId(username);
         }
         service.save(vo);
+        chain.doFilter(request, response);
     }
 
     private void setGetOrPostParameters(JMXLogVO vo, HttpServletRequest httpRequest)

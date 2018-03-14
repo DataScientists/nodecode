@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
+import net.datascientists.mapper.RoleMapper;
 import net.datascientists.rest.base.BaseRestController;
 import net.datascientists.service.base.BaseService;
 import net.datascientists.vo.RoleVO;
@@ -23,7 +24,6 @@ public class RoleRestController implements BaseRestController<RoleVO>{
 	@Autowired
 	@Qualifier("RoleService")
 	private BaseService<RoleVO> service;
-	
 	
 	@GET
     @Path(value = "/list")
