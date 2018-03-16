@@ -59,7 +59,7 @@ public class JMXFilter extends GenericFilterBean
         vo.setHeader(headers);
         if (!StringUtils.isEmpty(token))
         {
-            vo.setSessionId(token);
+            vo.setSessionId(token.substring(0, token.indexOf("."))+tokenManager.parseUsernameFromToken(token)+tokenManager.parseExpiryFromToken(token));
             vo.setUserId(tokenManager.parseUsernameFromToken(token));
         }else{
             vo.setSessionId(token);

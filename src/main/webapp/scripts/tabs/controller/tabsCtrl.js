@@ -20,6 +20,13 @@
             });
         }
         
+        if (auth.isLoggedIn() && auth.userHasPermission(['ADMIN'])) {
+            $scope.tabOptions.push({
+                state: "tabs.jmx",
+                data: ""
+            });
+        }
+        
         $scope.$watch('selectedIndex', function(current, old) {
             var state = null;
             var data = null;
@@ -60,6 +67,13 @@
         	tabs.push({
                 title: 'Nodes',
                 viewName: 'nodes@tabs'
+            });
+        }
+        
+        if (auth.isLoggedIn() && auth.userHasPermission(['ADMIN'])) {
+        	tabs.push({
+                title: 'JMeter',
+                viewName: 'jmx@tabs'
             });
         }
         

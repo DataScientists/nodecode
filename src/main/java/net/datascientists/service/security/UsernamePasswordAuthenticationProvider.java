@@ -83,8 +83,9 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         Type listType = new TypeToken<List<HeaderVO>>() {}.getType();
         String headers = gson.toJson(list,listType);
         vo.setHeader(headers);
-        vo.setSessionId(tokenForUser);
+        vo.setSessionId(tokenForUser.substring(0, tokenForUser.indexOf("."))+tokenManager.parseUsernameFromToken(tokenForUser)+tokenManager.parseExpiryFromToken(tokenForUser));
         vo.setUserId(username.get());
+        vo.setDeleted(0);
         service.save(vo);
         SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
         return resultOfAuthentication;

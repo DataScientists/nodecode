@@ -2,7 +2,10 @@ package net.datascientists.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -47,8 +50,10 @@ public class JMXDao implements BaseDao<JMXLog>
     @Override
     public List<JMXLog> list()
     {
-        // TODO Auto-generated method stub
-        return null;
+        final Session session = sessionFactory.getCurrentSession();
+        final Criteria crit = session.createCriteria(JMXLog.class);
+        crit.add(Restrictions.eq("deleted", 0));
+        return crit.list();
     }
 
     @Override

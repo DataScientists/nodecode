@@ -21,13 +21,14 @@ public class JMXLogMapper implements BaseMapper<JMXLogVO, JMXLog>
         }
         JMXLogVO vo = new JMXLogVO();
         vo.setId(entity.getId());  
-        vo.setDeleted(0);
+        vo.setDeleted(entity.getDeleted());
         vo.setFunction(entity.getFunction());
         vo.setGetParameters(entity.getGetParameters());
         vo.setHeader(entity.getHeader());
         vo.setPostParameters(entity.getPostParameters());
         vo.setSessionId(entity.getSessionId());
         vo.setUserId(entity.getUserId());
+        vo.setCreatedDate(entity.getCreatedDate());
         return vo;
     }
 
@@ -45,6 +46,7 @@ public class JMXLogMapper implements BaseMapper<JMXLogVO, JMXLog>
         entity.setFunction(vo.getFunction());
         entity.setHeader(vo.getHeader());
         entity.setUserId(vo.getUserId());
+        entity.setDeleted(vo.getDeleted());
         return entity;
     }
 
