@@ -7,6 +7,44 @@
 	function JMeterCtrl($log,NgTableParams,$scope,$filter,JMeterService,ngToast){
 		var self = this;
 		
+		self.exportJMX = function(){
+			if($scope.checkboxes.items == undefined && $scope.checkboxes.items.length < 1){
+				ngToast.create({
+		    		  className: 'danger',
+		    		  content: "No logs selected for export."
+		    	 });
+				return;
+			}
+			var data = [];
+			_.each($scope.checkboxes.items,function(value, key){
+				 if(value){
+					 var log = _.find($scope.data,function(log){
+						 return log.id = key;
+					 });
+					 data.push(log);
+				 }
+			 });
+			JMeterService.exportJMeter(data).then(function(response){
+	        	  if(response.status == 200){
+	        		   var jmxFile = new Blob([data], { type: 'application/octet-stream' }); 
+						var jmxUrl = URL.createObjectURL(jmxFile);
+						
+						var anchor = angular.element('<a/>');
+					     anchor.attr({
+					         href: jmxUrl,
+					         target: '_blank',
+					         download: 'test.jmx'
+					     })[0].click();
+	        	  }else{
+	        			ngToast.create({
+				    		  className: 'danger',
+				    		  content: "response was "+response.status+" - Unable to export JMX."
+				    	 });
+	        			return;
+	        	  }
+            });
+	         }
+		
 		self.tableParams = new NgTableParams(
 				{
 				}, 
@@ -66,8 +104,8 @@
 		// watch for check all checkbox
 		$scope.$watch('checkboxes.checked', function(value) {	    	
 		    angular.forEach(self.tableParams.settings().dataset, function(item) {
-		        if (angular.isDefined(item.idAgent)) {
-		            $scope.checkboxes.items[item.idAgent] = value;
+		        if (angular.isDefined(item.id)) {
+		            $scope.checkboxes.items[item.id] = value;
 		        }
 		    });
 		});
@@ -80,8 +118,8 @@
 		    var checked = 0, unchecked = 0,
 		        total = self.tableParams.settings().dataset.length;
 		    angular.forEach(self.tableParams.settings().dataset, function(item) {
-		        checked   +=  ($scope.checkboxes.items[item.idAgent]) || 0;
-		        unchecked += (!$scope.checkboxes.items[item.idAgent]) || 0;
+		        checked   +=  ($scope.checkboxes.items[item.id]) || 0;
+		        unchecked += (!$scope.checkboxes.items[item.id]) || 0;
 		    });
 		    if ((unchecked == 0) || (checked == 0)) {
 		        $scope.checkboxes.checked = (checked == total);

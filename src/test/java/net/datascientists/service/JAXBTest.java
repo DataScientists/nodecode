@@ -9,6 +9,7 @@ import org.apache.jmeter.protocol.http.control.Header;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,7 +73,8 @@ public class JAXBTest
  
     @Test
     public void testSaveHashTree() {
-        String result = builder.build();
+        HashTree hashTree = builder.build();
+        String result = builder.createTree(hashTree);
         System.out.println(result);
         assertTrue(!StringUtils.isEmpty(result));
     }

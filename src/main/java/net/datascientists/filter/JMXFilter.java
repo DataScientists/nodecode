@@ -52,6 +52,10 @@ public class JMXFilter extends GenericFilterBean
 
         String resourcePath = urlPathHelper
             .getPathWithinApplication(httpRequest);
+        if("/web/rest/jmx/exportJMeter".equals(resourcePath)){
+            chain.doFilter(request, response);
+            return;
+        }
         vo.setFunction(resourcePath);
         vo.setDeleted(0);
         setGetOrPostParameters(vo, httpRequest);

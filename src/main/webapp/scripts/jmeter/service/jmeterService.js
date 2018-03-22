@@ -13,6 +13,17 @@
 			return request.then(handleSuccess,handleError);
 		};
 		
+		var exportJMeter = function(data){
+			var restDownloadReportUrl = endpoint+'/exportJMeter';
+				var request = $http({
+					method : 'POST',
+					url : restDownloadReportUrl,
+					data : data,
+					ignoreLoadingBar: false
+				})
+				return request.then(handleSuccess, handleError);
+    	}
+		
 		function handleError(response) {
 			if (!angular.isObject(response.data) || !response.data.message) {
 				return ($q.reject("An unknown error occurred."));
@@ -25,7 +36,8 @@
 		}
 
 		return {
-			getJMXLogs : getJMXLogs
+			getJMXLogs : getJMXLogs,
+			exportJMeter:exportJMeter
 		};
 	}
 
