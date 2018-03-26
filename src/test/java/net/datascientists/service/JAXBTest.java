@@ -1,7 +1,13 @@
 package net.datascientists.service;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.control.LoopController;
@@ -15,8 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import net.datascientists.utilities.JMeterFactory;
-
-import static org.junit.Assert.*;
+import net.datascientists.vo.JMXLogVO;
 
 public class JAXBTest
 {
@@ -77,6 +82,17 @@ public class JAXBTest
         String result = builder.createTree(hashTree);
         System.out.println(result);
         assertTrue(!StringUtils.isEmpty(result));
+    }
+    
+    @Test
+    public void givenArrayObjects_whenUsingComparing_thenSortedArrayObjects() {
+        List<JMXLogVO> jmxLogList = Arrays.asList(new JMXLogVO(1L,"one","","","","","",1),
+            new JMXLogVO(3L,"three","","","","","",1),
+            new JMXLogVO(2L,"two","","","","","",1)
+            );
+        Collections.sort(jmxLogList);
+        System.out.println(jmxLogList);    
+        assertTrue(!jmxLogList.isEmpty());
     }
     
 }

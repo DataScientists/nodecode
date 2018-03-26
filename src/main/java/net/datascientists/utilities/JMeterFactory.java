@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.extractor.json.jsonpath.JSONPostProcessor;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase;
 import org.apache.jmeter.save.SaveService;
@@ -26,6 +27,7 @@ public class JMeterFactory
         private GenericController controller;
         private TestPlan testPlan;
         private List<HashTree> childHashTree = new ArrayList<>();
+        private JSONPostProcessor jsonPostProcesser;
 
 
         public Builder addTestPlan(final TestPlan testPlan)
@@ -68,6 +70,12 @@ public class JMeterFactory
             this.httpSampler.add(httpSampler);
             return this;
         }
+        
+        public Builder addJSONPostProcessor(final JSONPostProcessor jsonPostProcessor)
+        {
+            this.jsonPostProcesser = jsonPostProcessor;
+            return this;
+        }
 
 
         public HashTree build()
@@ -97,12 +105,16 @@ public class JMeterFactory
             {
                 hashTree.add(threadGroup);
             }
+            if (jsonPostProcesser != null)
+            {
+                hashTree.add(jsonPostProcesser);
+            }
             if (!this.httpSampler.isEmpty())
             {
                 for (HTTPSamplerBase sampler : this.httpSampler)
                 {
                     sampler.setHeaderManager(this.header);
-                    hashTree.add("httpSampler", this.httpSampler);
+                    hashTree.add("httpSampler", sampler);
                 }
             }
             return hashTree;

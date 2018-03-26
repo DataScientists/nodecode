@@ -19,14 +19,14 @@
 			_.each($scope.checkboxes.items,function(value, key){
 				 if(value){
 					 var log = _.find($scope.data,function(log){
-						 return log.id = key;
+						 return log.id == key;
 					 });
 					 data.push(log);
 				 }
 			 });
 			JMeterService.exportJMeter(data).then(function(response){
 	        	  if(response.status == 200){
-	        		   var jmxFile = new Blob([data], { type: 'application/octet-stream' }); 
+	        		   var jmxFile = new Blob([response.data], { type: 'application/octet-stream' }); 
 						var jmxUrl = URL.createObjectURL(jmxFile);
 						
 						var anchor = angular.element('<a/>');
