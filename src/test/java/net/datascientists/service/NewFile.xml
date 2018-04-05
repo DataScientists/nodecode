@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="2.8 r1393162">
+	<org.apache.jorphan.collections.HashTree>
+		<ThreadGroup>
+			<intProp name="ThreadGroup.num_threads">1</intProp>
+			<intProp name="ThreadGroup.ramp_time">1</intProp>
+			<elementProp name="ThreadGroup.main_controller"
+				elementType="LoopController">
+				<boolProp name="LoopController.continue_forever">false</boolProp>
+				<intProp name="LoopController.loops">1</intProp>
+			</elementProp>
+		</ThreadGroup>
+		<org.apache.jorphan.collections.HashTree />
+		<ThreadGroup>
+			<intProp name="ThreadGroup.num_threads">1</intProp>
+			<intProp name="ThreadGroup.ramp_time">1</intProp>
+			<elementProp name="ThreadGroup.main_controller"
+				elementType="LoopController">
+				<boolProp name="LoopController.continue_forever">false</boolProp>
+				<intProp name="LoopController.loops">1</intProp>
+			</elementProp>
+		</ThreadGroup>
+		<org.apache.jorphan.collections.HashTree />
+		<java.lang.String>httpSampler</java.lang.String>
+		<org.apache.jorphan.collections.HashTree>
+			<HTTPSamplerProxy>
+				<elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+					<collectionProp name="Arguments.arguments" />
+				</elementProp>
+				<stringProp name="HTTPSampler.domain">localhost</stringProp>
+				<intProp name="HTTPSampler.port">8080</intProp>
+				<stringProp name="HTTPSampler.path">/web/security/login</stringProp>
+				<stringProp name="HTTPSampler.method">POST</stringProp>
+				<elementProp name="HTTPSampler.header_manager"
+					elementType="HeaderManager">
+					<collectionProp name="HeaderManager.headers">
+						<elementProp name="username" elementType="Header">
+							<stringProp name="Header.name">username</stringProp>
+							<stringProp name="Header.value">admin</stringProp>
+						</elementProp>
+						<elementProp name="password" elementType="Header">
+							<stringProp name="Header.name">password</stringProp>
+							<stringProp name="Header.value">Admin123##</stringProp>
+						</elementProp>
+					</collectionProp>
+				</elementProp>
+			</HTTPSamplerProxy>
+			<org.apache.jorphan.collections.HashTree />
+			<HTTPSamplerProxy>
+				<elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+					<collectionProp name="Arguments.arguments" />
+				</elementProp>
+				<stringProp name="HTTPSampler.domain">localhost</stringProp>
+				<intProp name="HTTPSampler.port">8080</intProp>
+				<stringProp name="HTTPSampler.path">/web/rest/role/list</stringProp>
+				<stringProp name="HTTPSampler.method">GET</stringProp>
+				<elementProp name="HTTPSampler.header_manager"
+					elementType="HeaderManager">
+					<collectionProp name="HeaderManager.headers">
+						<elementProp name="" elementType="Header">
+							<stringProp name="Header.name"></stringProp>
+							<stringProp name="Header.value"></stringProp>
+							<stringProp name="Accept">application/json, text/plain, */*
+							</stringProp>
+							<stringProp name="X-Auth-Token">${jsontoken}</stringProp>
+						</elementProp>
+						<elementProp name="host" elementType="Header">
+							<stringProp name="Header.name">host</stringProp>
+							<stringProp name="Header.value">localhost:8080</stringProp>
+						</elementProp>
+						<elementProp name="connection" elementType="Header">
+							<stringProp name="Header.name">connection</stringProp>
+							<stringProp name="Header.value">keep-alive</stringProp>
+						</elementProp>
+						<elementProp name="accept" elementType="Header">
+							<stringProp name="Header.name">accept</stringProp>
+							<stringProp name="Header.value">application/json, text/plain, */*
+							</stringProp>
+						</elementProp>
+						<elementProp name="x-auth-token" elementType="Header">
+							<stringProp name="Header.name">x-auth-token</stringProp>
+							<stringProp name="Header.value">ImFkbWluIg==.PHWwHBKWVh21PclXOuxdQ8dCT90Yz2fyMxMEF7E5Md0=@@W3siYXV0aG9yaXR5IjoiQURNSU4ifV0=.SF5V7PWB2Oq9jDDXhcGbRd6fvW3aFmkquSsrR3a7bQk=@@IjIwMTgtMDMtMTZUMDk6MzY6MTguMjQzIg==.6CwMSIFImeKU7+6Uo7f7dPtqfo54zwcYwLK2jezfyks=
+							</stringProp>
+						</elementProp>
+						<elementProp name="user-agent" elementType="Header">
+							<stringProp name="Header.name">user-agent</stringProp>
+							<stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64;
+								x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186
+								Safari/537.36</stringProp>
+						</elementProp>
+						<elementProp name="referer" elementType="Header">
+							<stringProp name="Header.name">referer</stringProp>
+							<stringProp name="Header.value">http://localhost:8080/nodecode/
+							</stringProp>
+						</elementProp>
+						<elementProp name="accept-encoding" elementType="Header">
+							<stringProp name="Header.name">accept-encoding</stringProp>
+							<stringProp name="Header.value">gzip, deflate, br</stringProp>
+						</elementProp>
+						<elementProp name="accept-language" elementType="Header">
+							<stringProp name="Header.name">accept-language</stringProp>
+							<stringProp name="Header.value">en-US,en;q=0.9</stringProp>
+						</elementProp>
+					</collectionProp>
+				</elementProp>
+			</HTTPSamplerProxy>
+			<org.apache.jorphan.collections.HashTree />
+			<HTTPSamplerProxy>
+				<elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+					<collectionProp name="Arguments.arguments" />
+				</elementProp>
+				<stringProp name="HTTPSampler.domain">localhost</stringProp>
+				<intProp name="HTTPSampler.port">8080</intProp>
+				<stringProp name="HTTPSampler.path">/web/rest/admin/list</stringProp>
+				<stringProp name="HTTPSampler.method">GET</stringProp>
+				<elementProp name="HTTPSampler.header_manager"
+					elementType="HeaderManager">
+					<collectionProp name="HeaderManager.headers">
+						<elementProp name="" elementType="Header">
+							<stringProp name="Header.name"></stringProp>
+							<stringProp name="Header.value"></stringProp>
+							<stringProp name="Accept">application/json, text/plain, */*
+							</stringProp>
+							<stringProp name="X-Auth-Token">${jsontoken}</stringProp>
+						</elementProp>
+						<elementProp name="host" elementType="Header">
+							<stringProp name="Header.name">host</stringProp>
+							<stringProp name="Header.value">localhost:8080</stringProp>
+						</elementProp>
+						<elementProp name="connection" elementType="Header">
+							<stringProp name="Header.name">connection</stringProp>
+							<stringProp name="Header.value">keep-alive</stringProp>
+						</elementProp>
+						<elementProp name="accept" elementType="Header">
+							<stringProp name="Header.name">accept</stringProp>
+							<stringProp name="Header.value">application/json, text/plain, */*
+							</stringProp>
+						</elementProp>
+						<elementProp name="x-auth-token" elementType="Header">
+							<stringProp name="Header.name">x-auth-token</stringProp>
+							<stringProp name="Header.value">ImFkbWluIg==.PHWwHBKWVh21PclXOuxdQ8dCT90Yz2fyMxMEF7E5Md0=@@W3siYXV0aG9yaXR5IjoiQURNSU4ifV0=.SF5V7PWB2Oq9jDDXhcGbRd6fvW3aFmkquSsrR3a7bQk=@@IjIwMTgtMDMtMTZUMDk6MzY6MTguMjQzIg==.6CwMSIFImeKU7+6Uo7f7dPtqfo54zwcYwLK2jezfyks=
+							</stringProp>
+						</elementProp>
+						<elementProp name="user-agent" elementType="Header">
+							<stringProp name="Header.name">user-agent</stringProp>
+							<stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64;
+								x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186
+								Safari/537.36</stringProp>
+						</elementProp>
+						<elementProp name="referer" elementType="Header">
+							<stringProp name="Header.name">referer</stringProp>
+							<stringProp name="Header.value">http://localhost:8080/nodecode/
+							</stringProp>
+						</elementProp>
+						<elementProp name="accept-encoding" elementType="Header">
+							<stringProp name="Header.name">accept-encoding</stringProp>
+							<stringProp name="Header.value">gzip, deflate, br</stringProp>
+						</elementProp>
+						<elementProp name="accept-language" elementType="Header">
+							<stringProp name="Header.name">accept-language</stringProp>
+							<stringProp name="Header.value">en-US,en;q=0.9</stringProp>
+						</elementProp>
+					</collectionProp>
+				</elementProp>
+			</HTTPSamplerProxy>
+			<org.apache.jorphan.collections.HashTree />
+		</org.apache.jorphan.collections.HashTree>
+		<JSONPostProcessor>
+			<stringProp name="JSONPostProcessor.jsonPathExprs">$..*</stringProp>
+			<stringProp name="JSONPostProcessor.referenceNames">jsontoken</stringProp>
+			<stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+		</JSONPostProcessor>
+		<org.apache.jorphan.collections.HashTree />
+		<java.lang.String>loopController</java.lang.String>
+		<org.apache.jorphan.collections.HashTree>
+			<LoopController>
+				<boolProp name="LoopController.continue_forever">false</boolProp>
+				<intProp name="LoopController.loops">1</intProp>
+			</LoopController>
+			<org.apache.jorphan.collections.HashTree />
+			<LoopController>
+				<boolProp reference="../../../ThreadGroup[2]/elementProp/boolProp" />
+				<intProp reference="../../../ThreadGroup[2]/elementProp/intProp" />
+			</LoopController>
+			<org.apache.jorphan.collections.HashTree />
+			<LoopController>
+				<boolProp reference="../../../ThreadGroup/elementProp/boolProp" />
+				<intProp reference="../../../ThreadGroup/elementProp/intProp" />
+			</LoopController>
+			<org.apache.jorphan.collections.HashTree />
+		</org.apache.jorphan.collections.HashTree>
+		<java.lang.String>testPlan</java.lang.String>
+		<org.apache.jorphan.collections.HashTree>
+			<TestPlan testname="TestPlan">
+				<stringProp name="TestPlan.comments">Test Plan Created in node code.
+				</stringProp>
+			</TestPlan>
+			<org.apache.jorphan.collections.HashTree />
+		</org.apache.jorphan.collections.HashTree>
+		<JSONPostProcessor>
+			<stringProp name="JSONPostProcessor.jsonPathExprs">$..*</stringProp>
+			<stringProp name="JSONPostProcessor.referenceNames">jsontoken</stringProp>
+			<stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+		</JSONPostProcessor>
+		<org.apache.jorphan.collections.HashTree />
+		<ThreadGroup>
+			<intProp name="ThreadGroup.num_threads">1</intProp>
+			<intProp name="ThreadGroup.ramp_time">1</intProp>
+			<elementProp name="ThreadGroup.main_controller"
+				elementType="LoopController">
+				<boolProp
+					reference="../../../org.apache.jorphan.collections.HashTree[5]/LoopController/boolProp" />
+				<intProp
+					reference="../../../org.apache.jorphan.collections.HashTree[5]/LoopController/intProp" />
+			</elementProp>
+		</ThreadGroup>
+		<org.apache.jorphan.collections.HashTree />
+	</org.apache.jorphan.collections.HashTree>
+</jmeterTestPlan>

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.jmeter.control.LoopController;
@@ -16,7 +15,6 @@ import org.apache.jmeter.protocol.http.control.Header;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
 import org.apache.jmeter.testelement.TestPlan;
-import org.apache.jorphan.collections.HashTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +94,7 @@ public class JMXService implements JMXServiceInterface
         testplan.setName("TestPlan");
         testplan.setComment("Test Plan Created in node code.");
         builder.addTestPlan(testplan);
+        JMeterFactory factory = builder.build();
         for (JMXLogVO jmxLogVO : list)
         {
             JMeterFactory.Builder childbuilder = new JMeterFactory.Builder();
@@ -125,10 +124,9 @@ public class JMXService implements JMXServiceInterface
             childbuilder.addHttpSampler(httpSampler);
             childbuilder.addThreadGroup(threadGroup);
 
-            builder.addChildHashTree(childbuilder.build());
+            factory.getHashTree().add(childbuilder.build().getHashTree());
         }
-        HashTree hashTree = builder.build();
-        String result = builder.createTree(hashTree);
+        String result = builder.createTree(factory.getHashTree());
         String filePath = "";
         try
         {

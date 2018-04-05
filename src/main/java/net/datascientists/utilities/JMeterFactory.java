@@ -6,21 +6,98 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.extractor.json.jsonpath.JSONPostProcessor;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
 import org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase;
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestPlan;
+import org.apache.jmeter.threads.ThreadGroup;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
 public class JMeterFactory
 {
+    
+    private HashTree hashTree;
+    private org.apache.jmeter.threads.ThreadGroup threadGroup;
+    private List<HTTPSamplerBase> httpSampler;
+    private HeaderManager header;
+    private GenericController controller;
+    private TestPlan testPlan;
+    private List<HashTree> childHashTree;
+    private JSONPostProcessor jsonPostProcesser;
+
+    
+    
+    public JMeterFactory(
+        HashTree hashTree, ThreadGroup threadGroup, List<HTTPSamplerBase> httpSampler, HeaderManager header, GenericController controller, TestPlan testPlan,
+        List<HashTree> childHashTree, JSONPostProcessor jsonPostProcesser)
+    {
+        super();
+        this.hashTree = hashTree;
+        this.threadGroup = threadGroup;
+        this.httpSampler = httpSampler;
+        this.header = header;
+        this.controller = controller;
+        this.testPlan = testPlan;
+        this.childHashTree = childHashTree;
+        this.jsonPostProcesser = jsonPostProcesser;
+    }
+
+
+    public HashTree getHashTree()
+    {
+        return hashTree;
+    }
+
+
+    public org.apache.jmeter.threads.ThreadGroup getThreadGroup()
+    {
+        return threadGroup;
+    }
+
+
+    public List<HTTPSamplerBase> getHttpSampler()
+    {
+        return httpSampler;
+    }
+
+
+    public HeaderManager getHeader()
+    {
+        return header;
+    }
+
+
+    public GenericController getController()
+    {
+        return controller;
+    }
+
+
+    public TestPlan getTestPlan()
+    {
+        return testPlan;
+    }
+
+
+    public List<HashTree> getChildHashTree()
+    {
+        return childHashTree;
+    }
+
+
+    public JSONPostProcessor getJsonPostProcesser()
+    {
+        return jsonPostProcesser;
+    }
+
 
     public static class Builder
     {
 
-        private HashTree hashTree;
+        private HashTree hashTree = new HashTree();
         private org.apache.jmeter.threads.ThreadGroup threadGroup;
         private List<HTTPSamplerBase> httpSampler = new ArrayList<>();
         private HeaderManager header;
@@ -78,46 +155,38 @@ public class JMeterFactory
         }
 
 
-        public HashTree build()
+        public JMeterFactory build()
         {
             String jmeterHome = "C:\\Users\\lenovo\\Downloads\\apache-jmeter-3.3\\apache-jmeter-3.3"; 
             JMeterUtils.setJMeterHome(jmeterHome); 
             JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir() + "\\jmeter.properties"); 
             JMeterUtils.initLocale();
             
-            hashTree = new HashTree();
             if (controller != null)
             {
-                hashTree.add("loopController", this.controller);
+                this.hashTree.add("loopController", this.controller);
             }
             if (testPlan != null)
             {
-                this.hashTree.add("testPlan", testPlan);
-            }
-            if (!childHashTree.isEmpty())
-            {
-                for (HashTree ht : childHashTree)
-                {
-                    hashTree.add(ht);
-                }
+                this.hashTree.add(testPlan);
             }
             if (threadGroup != null)
             {
-                hashTree.add(threadGroup);
+                this.hashTree.add(threadGroup);
             }
             if (jsonPostProcesser != null)
             {
-                hashTree.add(jsonPostProcesser);
+                this.hashTree.add(jsonPostProcesser);
             }
             if (!this.httpSampler.isEmpty())
             {
                 for (HTTPSamplerBase sampler : this.httpSampler)
                 {
                     sampler.setHeaderManager(this.header);
-                    hashTree.add("httpSampler", sampler);
+                    this.hashTree.add("httpSampler", sampler);
                 }
             }
-            return hashTree;
+            return new JMeterFactory(this.hashTree,threadGroup,httpSampler,header,controller,testPlan,childHashTree,jsonPostProcesser);
         }
 
 
