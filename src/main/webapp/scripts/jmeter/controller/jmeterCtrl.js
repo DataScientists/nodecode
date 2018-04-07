@@ -27,14 +27,13 @@
 			JMeterService.exportJMeter(data).then(function(response){
 	        	  if(response.status == 200){
 	        		   var jmxFile = new Blob([response.data], { type: 'application/octet-stream' }); 
-						var jmxUrl = URL.createObjectURL(jmxFile);
-						
-						var anchor = angular.element('<a/>');
-					     anchor.attr({
-					         href: jmxUrl,
-					         target: '_blank',
-					         download: 'test.jmx'
-					     })[0].click();
+						var jmxUrl = window.URL.createObjectURL(jmxFile);
+						 var a = document.createElement("a");
+				            document.body.appendChild(a);
+				            a.style = "display: none";
+		                a.href = jmxUrl;
+		                a.download = 'test.jmx';
+		                a.click();
 	        	  }else{
 	        			ngToast.create({
 				    		  className: 'danger',

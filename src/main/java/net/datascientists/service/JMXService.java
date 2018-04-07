@@ -113,9 +113,6 @@ public class JMXService implements JMXServiceInterface
             if (jmxLogVO.getFunction() != null && !(jmxLogVO.getFunction().contains("login")))
             {
                 JSONPostProcessor jsonPostProcessor = new JSONPostProcessor();
-                jsonPostProcessor.setJsonPathExpressions("$..*");
-                jsonPostProcessor.setRefNames("jsontoken");
-                jsonPostProcessor.setMatchNumbers("1");
                 childbuilder.addJSONPostProcessor(jsonPostProcessor);
             }
 
@@ -123,7 +120,7 @@ public class JMXService implements JMXServiceInterface
             childbuilder.addController(loopController);
             childbuilder.addHttpSampler(httpSampler);
             childbuilder.addThreadGroup(threadGroup);
-
+            childbuilder.setDefaultElements(childbuilder.build().getHashTree());
             factory.getHashTree().add(childbuilder.build().getHashTree());
         }
         String result = builder.createTree(factory.getHashTree());
