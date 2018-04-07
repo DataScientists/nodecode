@@ -94,7 +94,6 @@ public class JMXService implements JMXServiceInterface
         testplan.setName("TestPlan");
         testplan.setComment("Test Plan Created in node code.");
         builder.addTestPlan(testplan);
-        JMeterFactory factory = builder.build();
         for (JMXLogVO jmxLogVO : list)
         {
             JMeterFactory.Builder childbuilder = new JMeterFactory.Builder();
@@ -121,8 +120,9 @@ public class JMXService implements JMXServiceInterface
             childbuilder.addHttpSampler(httpSampler);
             childbuilder.addThreadGroup(threadGroup);
             childbuilder.setDefaultElements(childbuilder.build().getHashTree());
-            factory.getHashTree().add(childbuilder.build().getHashTree());
+            builder.addChildHashTree(childbuilder.build().getHashTree());
         }
+        JMeterFactory factory = builder.build();
         String result = builder.createTree(factory.getHashTree());
         String filePath = "";
         try
