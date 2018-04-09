@@ -75,13 +75,22 @@ public class JMXFilter extends GenericFilterBean
 
     private void setGetOrPostParameters(JMXLogVO vo, HttpServletRequest httpRequest)
     {
+        Gson gson = new Gson();
         if ("GET".equals(httpRequest.getMethod()))
         {
-            vo.setGetParameters(httpRequest.getParameterMap().toString());
+            String requestParam = "";
+            if(!httpRequest.getParameterMap().isEmpty()){
+                requestParam = gson.toJson(httpRequest.getParameterMap());
+            }
+            vo.setGetParameters(requestParam);
         }
         else
         {
-            vo.setPostParameters(httpRequest.getParameterMap().toString());
+            String requestParam = "";
+            if(!httpRequest.getParameterMap().isEmpty()){
+                requestParam = gson.toJson(httpRequest.getParameterMap());
+            }
+            vo.setPostParameters(requestParam);
         }
     }
 
@@ -95,6 +104,9 @@ public class JMXFilter extends GenericFilterBean
         if (headerNames != null) {
                 while (headerNames.hasMoreElements()) {
                     String name = headerNames.nextElement();
+                    if(name.contains("x-auth-token") || name.contains("cookie")){
+                        continue;
+                    }
                     list.add(new HeaderVO(name, httpRequest.getHeader(name)));
                 }
         }

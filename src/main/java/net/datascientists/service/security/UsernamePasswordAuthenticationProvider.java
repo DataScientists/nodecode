@@ -77,8 +77,8 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         vo.setFunction("/web/security/login");
         vo.setDeleted(0);
         List<HeaderVO> list = new ArrayList<>();
-        list.add(new HeaderVO("username",username.get()));
-        list.add(new HeaderVO("password",password.get()));
+        list.add(new HeaderVO("X-Auth-Username",username.get()));
+        list.add(new HeaderVO("X-Auth-Password",password.get()));
         Gson gson = new Gson();
         Type listType = new TypeToken<List<HeaderVO>>() {}.getType();
         String headers = gson.toJson(list,listType);

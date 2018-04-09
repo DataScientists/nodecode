@@ -2,19 +2,19 @@ package net.datascientists.service;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.protocol.http.control.Header;
 import org.apache.jmeter.protocol.http.control.HeaderManager;
-import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy;
+import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.TestPlan;
 import org.apache.jmeter.util.JMeterUtils;
@@ -31,6 +31,8 @@ public class JAXBTest
     
     private  JMeterFactory.Builder builder;
 
+    private HashTree hashTreeMain;
+    
     @Before
     public void setUp() throws FileNotFoundException, IOException {
         builder= new JMeterFactory.Builder();
@@ -47,7 +49,8 @@ public class JAXBTest
 //        testPlan.setFunctionalMode(false);
 //        testPlan.setUserDefinedVariables(null);
 //        testPlan.setTestPlanClasspath("");
-        builder.addTestPlan(testPlan);
+//        builder.addTestPlan(testPlan);
+        hashTreeMain = new HashTree(testPlan);
         
         // HTTP Sampler
 //        HTTPSamplerProxy httpSampler = new HTTPSamplerProxy();
@@ -56,12 +59,15 @@ public class JAXBTest
 //        httpSampler.setPort(80);
 //        httpSampler.setPath("/");
 //        httpSampler.setMethod("GET");
-//        
-//        HeaderManager headerManager = new HeaderManager();
-//        Header header = new Header();
-//        header.setName("Accept");
-//        header.setValue("application/json, text/plain, */*");
-//        headerManager.add(header);
+//
+        HeaderManager headerManager = new HeaderManager();
+        Header header = new Header();
+        header.setName("Accept");
+        header.setValue("application/json, text/plain, */*");
+        headerManager.add(header);
+        HashTree hashTree = hashTreeMain.add(testPlan, headerManager);
+        HashTree configTestElement = hashTreeMain.add(testPlan, JMeterFactory.addDefaultConfigTestElement());
+//        builder.addChildHashTree(hashTree);
 //        httpSampler.setHeaderManager(headerManager);
 //        
 //        // Loop Controller
@@ -80,7 +86,6 @@ public class JAXBTest
 //        builder.addHeader(headerManager);
 //        builder.addController(loopController);
 //        builder.addHttpSampler(httpSampler);
-//        builder.addThreadGroup(threadGroup);
     }
  
     @After
@@ -89,10 +94,17 @@ public class JAXBTest
  
     @Test
     public void testSaveHashTree() {
-        JMeterFactory factory = builder.build();
-        String result = builder.createTree(factory.getHashTree());
-        System.out.println(result);
-        assertTrue(!StringUtils.isEmpty(result));
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try
+        {
+            SaveService.saveTree(hashTreeMain, os);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println(os.toString());
+        assertTrue(!StringUtils.isEmpty(os.toString()));
     }
     
     @Test
