@@ -24,6 +24,7 @@ import org.springframework.http.MediaType;
 import net.datascientists.rest.base.BaseRestController;
 import net.datascientists.service.JMXService;
 import net.datascientists.service.JMXServiceInterface;
+import net.datascientists.utilities.PropUtil;
 import net.datascientists.vo.JMXLogVO;
 
 @Path("/jmx")
@@ -67,7 +68,7 @@ public class JMXRestController implements BaseRestController<JMXLogVO>
         java.nio.file.Path path = Paths.get(pathStr);
         return Response.ok(getOut(Files.readAllBytes(path), pathStr),
             javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM)
-            .header("content-disposition", "attachment; filename = test.jmx")
+            .header("content-disposition", "attachment; filename = "+PropUtil.getInstance().getProperty("jmx.filename"))
             .build();
     }
     

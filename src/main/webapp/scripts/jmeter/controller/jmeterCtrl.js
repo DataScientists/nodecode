@@ -32,7 +32,7 @@
 				            document.body.appendChild(a);
 				            a.style = "display: none";
 		                a.href = jmxUrl;
-		                a.download = 'test.jmx';
+		                a.download = 'jmeterreport.jmx';
 		                a.click();
 	        	  }else{
 	        			ngToast.create({

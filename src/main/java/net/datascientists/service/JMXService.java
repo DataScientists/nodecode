@@ -171,7 +171,7 @@ public class JMXService implements JMXServiceInterface
 
     private String writeToFile(String hashTree) throws IOException
     {
-        String path = PropUtil.getInstance().getProperty("jmx.path") + "test.jmx";
+        String path = PropUtil.getInstance().getProperty("jmx.path") + PropUtil.getInstance().getProperty("jmx.filename");
         FileOutputStream fos = new FileOutputStream(path);
         BufferedOutputStream bos = new BufferedOutputStream(fos);
         bos.write(hashTree.getBytes("UTF-8"));

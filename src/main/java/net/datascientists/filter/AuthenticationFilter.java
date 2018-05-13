@@ -100,7 +100,7 @@ public class AuthenticationFilter extends GenericFilterBean {
 
 	private boolean postToAuthenticate(HttpServletRequest httpRequest,
 			String resourcePath) {
-		return "/web/security/login".equalsIgnoreCase(resourcePath)
+		return WSConstants.LOGIN_URL.equalsIgnoreCase(resourcePath)
 				&& "POST".equals(httpRequest.getMethod());
 	}
 

@@ -25,8 +25,10 @@ import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import net.datascientists.constants.WSConstants;
 import net.datascientists.mapper.UserMapper;
 import net.datascientists.service.base.BaseService;
+import net.datascientists.utilities.PropUtil;
 import net.datascientists.vo.HeaderVO;
 import net.datascientists.vo.JMXLogVO;
 import net.datascientists.vo.RoleVO;
@@ -73,12 +75,22 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         String tokenForUser = tokenManager.createTokenForUser(username.get(),
             (List<GrantedAuthority>)resultOfAuthentication.getToken().getUserInfo().get("roles"));
         resultOfAuthentication.getToken().setToken(tokenForUser);
+        onSuccessfulLoginSaveToJMeter(username, password, tokenForUser);
+        SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
+        return resultOfAuthentication;
+    }
+
+    private void onSuccessfulLoginSaveToJMeter(Optional<String> username, Optional<String> password, String tokenForUser)
+    {
+        if(skipJmeterLogging()){
+            return;
+        }
         JMXLogVO vo = new JMXLogVO();
-        vo.setFunction("/web/security/login");
+        vo.setFunction(WSConstants.LOGIN_URL);
         vo.setDeleted(0);
         List<HeaderVO> list = new ArrayList<>();
-        list.add(new HeaderVO("X-Auth-Username",username.get()));
-        list.add(new HeaderVO("X-Auth-Password",password.get()));
+        list.add(new HeaderVO(WSConstants.AUTH_USERNAME_PROP,username.get()));
+        list.add(new HeaderVO(WSConstants.AUTH_PWD_PROP,password.get()));
         Gson gson = new Gson();
         Type listType = new TypeToken<List<HeaderVO>>() {}.getType();
         String headers = gson.toJson(list,listType);
@@ -87,8 +99,15 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         vo.setUserId(username.get());
         vo.setDeleted(0);
         service.save(vo);
-        SecurityContextHolder.getContext().setAuthentication(resultOfAuthentication);
-        return resultOfAuthentication;
+    }
+    
+    private boolean skipJmeterLogging()
+    {
+        String property = PropUtil.getInstance().getProperty("jmx.skiplogging");
+        if(property == null || property.isEmpty() || "false".equals(property)){
+            return false;
+        }
+        return true;
     }
     
     private AuthenticationWithToken authenticateUser(String username, String password) {

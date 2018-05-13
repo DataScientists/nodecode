@@ -3,6 +3,7 @@ package net.datascientists.filter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import net.datascientists.constants.WSConstants;
 import net.datascientists.service.base.BaseService;
 import net.datascientists.service.security.TokenManager;
+import net.datascientists.utilities.PropUtil;
 import net.datascientists.vo.HeaderVO;
 import net.datascientists.vo.JMXLogVO;
 
@@ -43,16 +45,14 @@ public class JMXFilter extends GenericFilterBean
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {
         HttpServletRequest httpRequest = asHttp(request);
-//        HttpServletResponse httpResponse = asHttp(response);
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-        JMXLogVO vo = new JMXLogVO();
         String username = httpRequest.getHeader(WSConstants.AUTH_USERNAME_PROP);
-//        String password = httpRequest.getHeader(WSConstants.AUTH_PWD_PROP);
         String token = httpRequest.getHeader(WSConstants.AUTH_TOKEN);
 
+        JMXLogVO vo = new JMXLogVO();
         String resourcePath = urlPathHelper
             .getPathWithinApplication(httpRequest);
-        if("/web/rest/jmx/exportJMeter".equals(resourcePath)){
+        if(skipJmeterForSpecificURLs(resourcePath) || skipJmeterLogging()){
             chain.doFilter(request, response);
             return;
         }
@@ -72,6 +72,7 @@ public class JMXFilter extends GenericFilterBean
         service.save(vo);
         chain.doFilter(request, response);
     }
+
 
     private void setGetOrPostParameters(JMXLogVO vo, HttpServletRequest httpRequest)
     {
@@ -114,6 +115,40 @@ public class JMXFilter extends GenericFilterBean
         return gson.toJson(list,listType);
     }
     
+    private boolean skipJmeterLogging()
+    {
+        String property = PropUtil.getInstance().getProperty("jmx.skiplogging");
+        if(property == null || property.isEmpty() || "false".equals(property)){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean skipJmeterForSpecificURLs(String resourcePath){
+        String property = PropUtil.getInstance().getProperty("jmx.ignoreUrl");
+        if(property == null || property.isEmpty()){
+            return false;
+        }
+        List<String> listOfURLToIgnore = splitCommaDelimitedProperty(property);
+        if(listOfURLToIgnore.contains(resourcePath)){
+            return true;
+        }
+        return false;
+    }
+    
+    private List<String> splitCommaDelimitedProperty(String property)
+    {
+        String commaDelimiter = ",";
+        if(property.contains(commaDelimiter)){
+            String[] split = property.split(commaDelimiter);
+            return Arrays.asList(split);
+        }else{
+            List<String> result = new ArrayList<>();
+            result.add(property);
+            return result;
+        }
+    }
+
     private HttpServletRequest asHttp(ServletRequest request) {
         return (HttpServletRequest) request;
     }
